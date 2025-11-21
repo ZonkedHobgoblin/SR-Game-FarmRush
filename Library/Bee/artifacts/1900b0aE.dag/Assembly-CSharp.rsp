@@ -361,6 +361,7 @@
 "Assets/Challenge 1/Scripts/SpinProp.cs"
 "Assets/Scripts/Unit1/cam.cs"
 "Assets/Scripts/Unit1/PC.cs"
+"Assets/Scripts/Unit2/pc2.cs"
 -langversion:9.0
 
 /deterministic
