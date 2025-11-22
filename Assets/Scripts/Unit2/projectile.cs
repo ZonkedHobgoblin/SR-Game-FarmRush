@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class projectile : MonoBehaviour
@@ -12,9 +13,11 @@ public class projectile : MonoBehaviour
     public Mesh[] model;
     public string[] anims;
     public bool isAnimal;
+    public AnimatorController[] controller;
+    public Avatar[] avatars;
     private float animalSpeed = 1.0f;
-    // Start is called before the first frame update
-    void Start()
+    // ienumerator cause unity too slow with the anim stuff
+    IEnumerator Start()
     {
         //randomize and model so no need for multiple prefabs
         int ranNum = Random.Range(0, model.Length);
@@ -24,6 +27,9 @@ public class projectile : MonoBehaviour
         //check if its an animal, if yes then play anim from array (same script used for projectile so)
         if (isAnimal == true)
         {
+            GetComponent<Animator>().runtimeAnimatorController = controller[ranNum];
+            GetComponent<Animator>().avatar = avatars[ranNum];
+            yield return null;
             GetComponent<Animator>().Play(anims[ranNum]);
         }
     }

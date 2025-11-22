@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -5044776306153796447}
   - component: {fileID: -3449904022540854207}
   - component: {fileID: -580689774682966518}
+  - component: {fileID: 944093772417768072}
   m_Layer: 0
   m_Name: animal
   m_TagString: Untagged
@@ -46,16 +47,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba747cd8e928e8749a29977896615fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 40
+  speed:
+  - 8
+  - 7
+  - 6
+  - 7
+  - 6
+  - 2
+  - 5
+  - 5
+  - 5
+  - 4
+  - 4
+  - 4
+  - 4
   model:
-  - {fileID: 4300000, guid: f000ecb3e2f790d45bb3459ad897cb3e, type: 3}
+  - {fileID: 4300020, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
+  - {fileID: 4300020, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
   - {fileID: 4300020, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
   - {fileID: 4300008, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
-  - {fileID: 4300000, guid: 5cffd02f329556b48a122caf2426df2f, type: 3}
-  - {fileID: 4300020, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
+  - {fileID: 4300006, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
+  - {fileID: 4300000, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
+  - {fileID: 4300004, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
+  - {fileID: 4300002, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
+  - {fileID: 4300002, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
+  - {fileID: 4300002, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
+  - {fileID: 4300004, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
+  - {fileID: 4300004, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
   anims:
-  - 
+  - Fox_Run
+  - Birds_Run
+  - Birds_Run
+  - Birds_Run
+  - Birds_Run
+  - CowBull_Run
+  - Horse_Run
+  - Horse_Run
+  - Horse_Run
+  - CowBull_Run
+  - CowBull_Run
+  - CowBull_Run
+  - CowBull_Run
   isAnimal: 1
+  controller:
+  - {fileID: 9100000, guid: 89ce2bbff124d224986dcf79ae85990c, type: 2}
+  - {fileID: 9100000, guid: 89ce2bbff124d224986dcf79ae85990c, type: 2}
+  - {fileID: 9100000, guid: 89ce2bbff124d224986dcf79ae85990c, type: 2}
+  - {fileID: 9100000, guid: 89ce2bbff124d224986dcf79ae85990c, type: 2}
+  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
+  - {fileID: 9100000, guid: 8d09d925d62f9924488c35d1fc609194, type: 2}
+  - {fileID: 9100000, guid: 8d09d925d62f9924488c35d1fc609194, type: 2}
+  - {fileID: 9100000, guid: 8d09d925d62f9924488c35d1fc609194, type: 2}
+  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
+  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
+  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
+  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
+  avatars:
+  - {fileID: 9000000, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
+  - {fileID: 9000000, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
+  - {fileID: 9000000, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
+  - {fileID: 9000000, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
+  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
+  - {fileID: 9000000, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
+  - {fileID: 9000000, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
+  - {fileID: 9000000, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
+  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
+  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
+  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
+  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
 --- !u!33 &-3449904022540854207
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -106,3 +165,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &944093772417768072
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241222048460797507}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: d55a3dafe23105e409ee70d6605cbd49, type: 3}
+  m_Controller: {fileID: 9100000, guid: 48b1939106892b54c84bbd564c5e4bb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
