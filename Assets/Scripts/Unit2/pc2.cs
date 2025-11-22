@@ -16,6 +16,7 @@ public class pc2 : MonoBehaviour
     public float speed = 10.0f;
     public float Range = 10;
     public GameObject projectile;
+    private bool isShooting = false;
     void Update()
     {
         //Movement stuff VVVVVVVVVVVVVVVVV
@@ -26,10 +27,19 @@ public class pc2 : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -10f, 10f), transform.position.y, transform.position.z);
         
         //projectile stuff VVVVVVVVVVVV
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !isShooting)
         {
-            //spawn projectile at the guy
-            Instantiate(projectile, transform.position, projectile.transform.rotation);
+            //call the shoot thing
+            StartCoroutine(FireProjectile());
         }
+    }
+    //cooldown between shots
+    IEnumerator FireProjectile()
+    {
+        isShooting = true;
+        Instantiate(projectile, transform.position, projectile.transform.rotation);
+        yield return new WaitForSeconds(0.2f);
+        isShooting = false;
+
     }
 }
