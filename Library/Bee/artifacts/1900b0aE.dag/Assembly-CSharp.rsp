@@ -357,6 +357,7 @@
 "Assets/Challenge 1/Scripts/SpinProp.cs"
 "Assets/Scripts/Unit1/cam.cs"
 "Assets/Scripts/Unit1/PC.cs"
+"Assets/Scripts/Unit2/animalspawner.cs"
 "Assets/Scripts/Unit2/pc2.cs"
 "Assets/Scripts/Unit2/projectile.cs"
 -langversion:9.0

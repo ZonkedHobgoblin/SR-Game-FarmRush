@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Unit2\pc2.cs" />
+    <Compile Include="Assets\Scripts\Unit2\animalspawner.cs" />
     <Compile Include="Assets\Challenge 1\Scripts\FollowPlayerX.cs" />
     <Compile Include="Assets\Challenge 1\Scripts\PlayerControllerX.cs" />
     <Compile Include="Assets\Scripts\Unit2\projectile.cs" />
