@@ -361,6 +361,7 @@
 "Assets/Scripts/Unit2/animalspawner.cs"
 "Assets/Scripts/Unit2/pc2.cs"
 "Assets/Scripts/Unit2/projectile.cs"
+"Assets/Scripts/Unit2/ui.cs"
 -langversion:9.0
 
 /deterministic
