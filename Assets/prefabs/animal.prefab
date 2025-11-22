@@ -9,10 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8173496422891623564}
-  - component: {fileID: -5044776306153796447}
-  - component: {fileID: -3449904022540854207}
-  - component: {fileID: -580689774682966518}
   - component: {fileID: 944093772417768072}
+  - component: {fileID: -4966926035675694502}
+  - component: {fileID: -4202363657083767637}
+  - component: {fileID: 3354619743651759945}
+  - component: {fileID: 7012994294093462898}
+  - component: {fileID: 182928919621227224}
   m_Layer: 0
   m_Name: animal
   m_TagString: Untagged
@@ -29,13 +31,34 @@ Transform:
   m_GameObject: {fileID: 5241222048460797507}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.09, y: 0.09, z: 0.09}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5044776306153796447
+--- !u!95 &944093772417768072
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241222048460797507}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: d55a3dafe23105e409ee70d6605cbd49, type: 3}
+  m_Controller: {fileID: 9100000, guid: 48b1939106892b54c84bbd564c5e4bb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-4966926035675694502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,86 +67,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 5241222048460797507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba747cd8e928e8749a29977896615fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 9992675e5c9b06b4199b11d9568938a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed:
-  - 8
-  - 7
+  - 3
   - 6
-  - 7
   - 6
-  - 2
+  - 4
+  - 4
+  - 6
+  - 6
   - 5
-  - 5
-  - 5
-  - 4
-  - 4
-  - 4
-  - 4
-  model:
-  - {fileID: 4300020, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
-  - {fileID: 4300020, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
-  - {fileID: 4300020, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
-  - {fileID: 4300008, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
-  - {fileID: 4300006, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
-  - {fileID: 4300000, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
-  - {fileID: 4300004, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
-  - {fileID: 4300002, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
-  - {fileID: 4300002, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
-  - {fileID: 4300002, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
-  - {fileID: 4300004, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
-  - {fileID: 4300004, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
-  anims:
-  - Fox_Run
-  - Birds_Run
-  - Birds_Run
-  - Birds_Run
-  - Birds_Run
-  - CowBull_Run
-  - Horse_Run
-  - Horse_Run
-  - Horse_Run
-  - CowBull_Run
-  - CowBull_Run
-  - CowBull_Run
-  - CowBull_Run
-  isAnimal: 1
-  controller:
-  - {fileID: 9100000, guid: 89ce2bbff124d224986dcf79ae85990c, type: 2}
-  - {fileID: 9100000, guid: 89ce2bbff124d224986dcf79ae85990c, type: 2}
-  - {fileID: 9100000, guid: 89ce2bbff124d224986dcf79ae85990c, type: 2}
-  - {fileID: 9100000, guid: 89ce2bbff124d224986dcf79ae85990c, type: 2}
-  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
-  - {fileID: 9100000, guid: 8d09d925d62f9924488c35d1fc609194, type: 2}
-  - {fileID: 9100000, guid: 8d09d925d62f9924488c35d1fc609194, type: 2}
-  - {fileID: 9100000, guid: 8d09d925d62f9924488c35d1fc609194, type: 2}
-  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
-  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
-  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
-  - {fileID: 9100000, guid: d044bcc821b15eb40b3df145373ba26d, type: 2}
-  avatars:
-  - {fileID: 9000000, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
-  - {fileID: 9000000, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
-  - {fileID: 9000000, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
-  - {fileID: 9000000, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
-  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
-  - {fileID: 9000000, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
-  - {fileID: 9000000, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
-  - {fileID: 9000000, guid: c4324fcdc6ce67d4e97e3c807c446974, type: 3}
-  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
-  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
-  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
-  - {fileID: 9000000, guid: f18cd949d6d73cb459e428cd63e6ac27, type: 3}
---- !u!33 &-3449904022540854207
+  prefabs:
+  - {fileID: 112640, guid: c7ca0992ba00761469f731111e56b107, type: 3}
+  - {fileID: 119940, guid: 49b874b9460c6754c829d7cb541a99db, type: 3}
+  - {fileID: 120214, guid: 9bf484c5ec3d3bf43b2034c829f1abbe, type: 3}
+  - {fileID: 134694, guid: 50f1d192ccb21a24b95a7e4e403a9bb5, type: 3}
+  - {fileID: 102230, guid: 85de8c5eef336ad48900b2ac3e7bf65d, type: 3}
+  - {fileID: 139514, guid: 03e4c5418c1e9164bb1955135d815833, type: 3}
+  - {fileID: 151702, guid: 68a45bf17ac566545b70a13c90a7ee65, type: 3}
+  - {fileID: 127534, guid: 3fe800c166ae0d04881a20247bde736d, type: 3}
+--- !u!33 &-4202363657083767637
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5241222048460797507}
-  m_Mesh: {fileID: 4300020, guid: 693459689483f9e4aa5a1a6e8b37269e, type: 3}
---- !u!23 &-580689774682966518
+  m_Mesh: {fileID: 4300000, guid: 5bb9a811cdd73fa42975794b4c22350f, type: 3}
+--- !u!23 &3354619743651759945
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,24 +138,51 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!95 &944093772417768072
-Animator:
-  serializedVersion: 5
+--- !u!65 &7012994294093462898
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5241222048460797507}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: d55a3dafe23105e409ee70d6605cbd49, type: 3}
-  m_Controller: {fileID: 9100000, guid: 48b1939106892b54c84bbd564c5e4bb1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  serializedVersion: 3
+  m_Size: {x: 1.1703908, y: 1.7452259, z: 1.1703949}
+  m_Center: {x: 0, y: 0.87261295, z: 0}
+--- !u!54 &182928919621227224
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241222048460797507}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

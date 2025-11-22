@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,9 +15,9 @@ public class pc2 : MonoBehaviour
     // Update is called once per frame
     public float horizontalInput;
     public float speed = 10.0f;
-    public float Range = 10;
     public GameObject projectile;
     private bool isShooting = false;
+    private float animvalue;
     void Update()
     {
         //Movement stuff VVVVVVVVVVVVVVVVV
@@ -24,7 +25,7 @@ public class pc2 : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
         //clamp x axis because using if statements for this is stupid
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -10f, 10f), transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -12f, 12f), transform.position.y, transform.position.z);
         
         //projectile stuff VVVVVVVVVVVV
         if (Input.GetKey(KeyCode.Space) && !isShooting)
@@ -32,6 +33,16 @@ public class pc2 : MonoBehaviour
             //call the shoot thing
             StartCoroutine(FireProjectile());
         }
+        //anims
+        if (horizontalInput < 0)
+        {
+            animvalue = (horizontalInput * -1f);
+        }
+        else
+        {
+            animvalue = horizontalInput;
+        }
+        GetComponent<Animator>().SetFloat("Speed_f", animvalue);
     }
     //cooldown between shots
     IEnumerator FireProjectile()
@@ -40,6 +51,5 @@ public class pc2 : MonoBehaviour
         Instantiate(projectile, transform.position, projectile.transform.rotation);
         yield return new WaitForSeconds(0.2f);
         isShooting = false;
-
     }
 }

@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Unit1\cam.cs" />
     <Compile Include="Assets\Challenge 1\Scripts\SpinProp.cs" />
     <Compile Include="Assets\Scripts\Unit1\PC.cs" />
+    <Compile Include="Assets\Scripts\Unit2\animal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Course Library\_Source_Files\_LICENSE.txt" />
