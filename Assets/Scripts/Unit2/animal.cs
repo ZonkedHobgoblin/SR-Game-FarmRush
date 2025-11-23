@@ -10,6 +10,7 @@ public class animal : MonoBehaviour
     public float[] speed;
     private float bound = 30;
     public GameObject[] prefabs;
+    public ui Canvas;
     private float animalSpeed = 4.0f;
     private GameObject spawnedmodel;
     // ienumerator cause unity too slow with the anim stuff
@@ -25,6 +26,7 @@ public class animal : MonoBehaviour
         GameObject spawnedModel = Instantiate(prefabs[ranNum], transform);
         //randomize from array to select model
         animalSpeed = speed[ranNum];
+        Canvas = FindObjectOfType<ui>();
     }
 
     // Update is called once per frame
@@ -35,11 +37,13 @@ public class animal : MonoBehaviour
         if (transform.position.z > bound || transform.position.z < -(bound - 20))
         {
             Destroy(gameObject);
+            Canvas.health -= 1;
         }
     }
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
         Destroy(other.gameObject);
+        Canvas.score += 1;
     }
 }
