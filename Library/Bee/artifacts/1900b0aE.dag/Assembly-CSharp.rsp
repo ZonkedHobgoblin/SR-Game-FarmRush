@@ -363,8 +363,11 @@
 "Assets/Scripts/Unit1/PC.cs"
 "Assets/Scripts/Unit2/animal.cs"
 "Assets/Scripts/Unit2/animalspawner.cs"
+"Assets/Scripts/Unit2/DefenseCleanup.cs"
 "Assets/Scripts/Unit2/pc2.cs"
+"Assets/Scripts/Unit2/PrefabDestructEvent.cs"
 "Assets/Scripts/Unit2/projectile.cs"
+"Assets/Scripts/Unit2/SaveManager.cs"
 "Assets/Scripts/Unit2/ui.cs"
 -langversion:9.0
 

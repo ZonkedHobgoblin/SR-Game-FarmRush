@@ -6,6 +6,14 @@ using UnityEngine;
 
 public class pc2 : MonoBehaviour
 {
+    public float horizontalInput;
+    public float speed = 10.0f;
+    public GameObject projectile;
+    private bool isShooting = false;
+    private float animvalue;
+    public float cooldown = 0;
+    public bool isCooldown = false;
+    private bool isCoolingdown = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,11 +21,7 @@ public class pc2 : MonoBehaviour
     }
 
     // Update is called once per frame
-    public float horizontalInput;
-    public float speed = 10.0f;
-    public GameObject projectile;
-    private bool isShooting = false;
-    private float animvalue;
+
     void Update()
     {
         //Movement stuff VVVVVVVVVVVVVVVVV
@@ -28,11 +32,20 @@ public class pc2 : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -12f, 12f), transform.position.y, transform.position.z);
         
         //projectile stuff VVVVVVVVVVVV
-        if (Input.GetKey(KeyCode.Space) && !isShooting)
+        if (Input.GetKey(KeyCode.Space) && !isShooting && !isCooldown)
         {
             //call the shoot thing
             StartCoroutine(FireProjectile());
         }
+        else if (!isShooting && !isCooldown && !isCoolingdown)
+        {
+            StartCoroutine(LowerCooldown());
+        }
+        if ((cooldown == 1) && !isCooldown)
+        {
+            StartCoroutine(Cooldown());
+        }
+
         //anims
         if (horizontalInput < 0)
         {
@@ -42,14 +55,32 @@ public class pc2 : MonoBehaviour
         {
             animvalue = horizontalInput;
         }
+        //clamp cooldown
+        cooldown = (Mathf.Clamp(cooldown, 0, 1));
         GetComponent<Animator>().SetFloat("Speed_f", animvalue);
     }
     //cooldown between shots
     IEnumerator FireProjectile()
     {
         isShooting = true;
+        cooldown = (cooldown + 0.1f);
         Instantiate(projectile, transform.position, projectile.transform.rotation);
+
         yield return new WaitForSeconds(0.2f);
         isShooting = false;
+    }
+    IEnumerator LowerCooldown()
+    {
+        isCoolingdown = true;
+        cooldown = (cooldown - 0.06f);
+        yield return new WaitForSeconds(0.05f);
+        isCoolingdown = false;
+    }
+    IEnumerator Cooldown()
+    {
+        isCooldown = true;
+        yield return new WaitForSeconds(2.0f);
+        cooldown = 0.9f;
+        isCooldown = false;
     }
 }
