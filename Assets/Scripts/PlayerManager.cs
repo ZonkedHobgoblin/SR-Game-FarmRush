@@ -4,8 +4,29 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class pc2 : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
+
+
+
+
+
+
+
+
+
+
+
+    public bool GetDefenseCooldown()
+    {
+        return isDefenseCooldown;
+    }
+    public float GetCooldown()
+    {
+        return cooldown;
+    }
+
+
     public float horizontalInput;
     public float speed = 10.0f;
     public GameObject projectile;
@@ -17,7 +38,7 @@ public class pc2 : MonoBehaviour
     public float cooldown = 0;
     public bool isCooldown = false;
     private bool isCoolingdown = false;
-    public bool defenseCooldown = false;
+    public bool isDefenseCooldown = false;
     // Start is called before the first frame update
     void Start()
     {

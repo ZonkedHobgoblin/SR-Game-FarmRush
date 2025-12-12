@@ -8,27 +8,43 @@ using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
-public class ui : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-    public int heyThere;
-    
+    #region Variable defenitions
+    #region Other/Assets
+    // Other/Assets
+    public Image sliderFillImage;
+    #endregion
 
-    
+    #region System Managers
+    // System managers
     private GameBehaviourManager gameBehaviourManager;
+    private GameStateManager stateManager;
+    private PlayerManager playerManager;
+    #endregion
 
+    #region Game Objects
     // Game Objects
-        // UI Elements
-            private TextMeshProUGUI scoreText;
-            private TextMeshProUGUI highScoreText;
-
-        // Gameover elements
-        private GameObject gameoverObjectsParent;
-        private TextMeshProUGUI gameoverText;
-
+    #region UI Elements
+    // Main UI Elements
+    private TextMeshProUGUI scoreText;
+    private TextMeshProUGUI highScoreText;
+    private TextMeshProUGUI defenseCooldownText;
+    private Slider healthSlider;
+    private Slider cooldownSlider;
+    private Button retryButton;
+    private Button menuButton;
+    #endregion
+    #region Gameover elements
+    // Gameover elements
+    private GameObject gameoverObjectsParent;
+    private TextMeshProUGUI gameoverText;
+    #endregion
+    #endregion
+    #endregion
 
     private void OnEnable()
     {
-        gameBehaviourManager = FindFirstObjectByType<GameBehaviourManager>();
         // Subscribe to the OnGameover action from our game behaviour manager
         gameBehaviourManager.OnGameover += Gameover;
     }
@@ -39,144 +55,89 @@ public class ui : MonoBehaviour
         gameBehaviourManager.OnGameover -= Gameover;
     }
 
-    void Start()
+    private void Awake()
     {
+        #region Get GameObjetcs
         // Get game objects/components
-            // Get the game behaviour manager
-            gameBehaviourManager = FindFirstObjectByType<GameBehaviourManager>();
-
+        #region Get Managers
+        // Get the GameBehaviourManager
+        gameBehaviourManager = FindFirstObjectByType<GameBehaviourManager>();
+        // Get the GameStateManager
+        stateManager = FindFirstObjectByType<GameStateManager>();
+        // Get the PlayerManager
+        playerManager = FindFirstObjectByType<PlayerManager>();
+        #endregion
+        #region Get UI Objects
         // Get UI objects
-            
+        // Get health slider
+        healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+        // Get cooldown slider
+        cooldownSlider = GameObject.Find("CooldownSlider").GetComponent<Slider>();
+        // Get score text
+        scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
+        // Get high score text
+        highScoreText = GameObject.Find("HighScoreText").GetComponent<TextMeshProUGUI>();
+        // Get defense cooldown text
+        defenseCooldownText = GameObject.Find("DefenseCooldownText").GetComponent<TextMeshProUGUI>();
+        #region Get gameover objects
+        // Get game over UI elements
+        // Get parent of all game over UI objects for a simple active toggle
+        gameoverObjectsParent = GameObject.Find("GameoverParent");
+        // Get gameover text
+        gameoverText = GameObject.Find("GameoverText").GetComponent<TextMeshProUGUI>();
+        // Get Gameover UI Buttons
+        // Get Retry Button
+        retryButton = GameObject.Find("RetryButton").GetComponent<Button>();
+        // Get Menu Button
+        menuButton = GameObject.Find("MenuButton").GetComponent<Button>();
+        #endregion
+        #endregion
+        #endregion
 
-            // Get game over UI elements
-                // Get parent of all game over UI objects for a simple active toggle
-                    gameoverObjectsParent = GameObject.Find("GameoverParent");
-                // Get gameover text
-                    gameoverText = GameObject.Find("GameoverText").GetComponent<TextMeshProUGUI>();
-    }           
+        // Set the fill image (So we can change the colour if the cooldown is reached)
+        sliderFillImage = cooldownSlider.fillRect.GetComponent<Image>();
 
-    void Gameover()
-    {
-        GameOverStuff.SetActive(true);
-        gameoverpanel.SetActive(true);
-        gameovertext.text = $"GAME OVER\n\nScore: {score}\nHigh Score: {HighScoreUI}";
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public TextMeshProUGUI gameovertext;
-    public GameObject GameOverStuff;
-    public GameObject gameoverpanel;
-    public TextMeshProUGUI defensetext;
-    public Slider healthslider;
-    public Slider cooldownslider;
-    public TextMeshProUGUI scoretext;
-    public pc2 PlayerCont2;
-    public int HighScoreUI;
-    public TextMeshProUGUI highscoretext;
-    public Button retryButton;
-    public Button menuButton;
-
-
-    private Image fillImage;
-    private GameStateManager gameStateManager;
-    // Start is called before the first frame update
-    void Start()
-    {
-        fillImage = cooldownslider.fillRect.GetComponent<Image>();
+        // Button listener setup
         Button btn = retryButton.GetComponent<Button>();
-        btn.onClick.AddListener(ReloadScene);
+        //btn.onClick.AddListener(ReloadScene);
         Button btn2 = menuButton.GetComponent<Button>();
-        btn2.onClick.AddListener(LoadMenuScene);
-        gameStateManager = FindFirstObjectByType<GameStateManager>();
-
+        //btn2.onClick.AddListener(LoadMenuScene);
     }
+
     private void Update()
     {
-        healthslider.value = health / 10.0f;
-        cooldownslider.value = PlayerCont2.cooldown;
-        scoretext.text = "Score:\n" + score;
-        highscoretext.text = "High Score:\n" + HighScoreUI;
-        if (gameStateManager.GetHealth() <= 0)
+        // Grab and the variables from out GameStateManager and update the UI elements
+        // Set Score text
+        scoreText.text = stateManager.GetScore().ToString();
+
+        // Set high score text
+        highScoreText.text = stateManager.GetHighScore().ToString();
+
+        // Set defense cooldown text
+        if (playerManager.GetDefenseCooldown())
         {
-            //Gameover();
-        }
-        
-        if ((PlayerCont2.cooldown == 1) && (fillImage.color!= Color.red))
-        {
-            fillImage.color = Color.red;
-        }
-        else if ((PlayerCont2.cooldown < 1) && (fillImage.color!= new Color(255, 255, 0)))
-        {
-            fillImage.color = new Color(255, 255, 0);
-        }
-        if (PlayerCont2.defenseCooldown)
-        {
-            defensetext.text = "Defense on cooldown";
-        }
+               defenseCooldownText.text = "Defense ready";
+         }
         else
         {
-            defensetext.text = "Defense ready";
+            defenseCooldownText.text = "Defense unavailable";
         }
-        
+
+        // Set health slider
+        healthSlider.value = stateManager.GetHealth() / 10.0f;
+
+        // Set cooldown slider
+        cooldownSlider.value = playerManager.GetCooldown();
+    }
+    void Gameover()
+    {
+        gameoverObjectsParent.SetActive(true);
+        gameoverText.text = $"GAME OVER\n\nScore: {stateManager.GetScore().ToString()}\nHigh Score: {stateManager.GetHighScore().ToString()}";
+    }
+
 
     }
     //void Gameover()
     //{
         //Time.timeScale = 0f;
     //}
-
-    void ReloadScene()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Prototype 2", LoadSceneMode.Single);
-    }
-
-    void LoadMenuScene()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
-    }
-}
