@@ -55,19 +55,15 @@ public class UIManager : MonoBehaviour
         gameBehaviourManager.OnGameover -= Gameover;
     }
 
-    private void Awake()
+    private void GetObjects()
     {
-        #region Get GameObjetcs
         // Get game objects/components
-        #region Get Managers
         // Get the GameBehaviourManager
         gameBehaviourManager = FindFirstObjectByType<GameBehaviourManager>();
         // Get the GameStateManager
         stateManager = FindFirstObjectByType<GameStateManager>();
         // Get the PlayerManager
         playerManager = FindFirstObjectByType<PlayerManager>();
-        #endregion
-        #region Get UI Objects
         // Get UI objects
         // Get health slider
         healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
@@ -79,7 +75,6 @@ public class UIManager : MonoBehaviour
         highScoreText = GameObject.Find("HighScoreText").GetComponent<TextMeshProUGUI>();
         // Get defense cooldown text
         defenseCooldownText = GameObject.Find("DefenseCooldownText").GetComponent<TextMeshProUGUI>();
-        #region Get gameover objects
         // Get game over UI elements
         // Get parent of all game over UI objects for a simple active toggle
         gameoverObjectsParent = GameObject.Find("GameoverParent");
@@ -90,9 +85,11 @@ public class UIManager : MonoBehaviour
         retryButton = GameObject.Find("RetryButton").GetComponent<Button>();
         // Get Menu Button
         menuButton = GameObject.Find("MenuButton").GetComponent<Button>();
-        #endregion
-        #endregion
-        #endregion
+    }
+    private void Awake()
+    {
+        // Get and set all object references - seperate function to clean everything up
+        GetObjects();
 
         // Set the fill image (So we can change the colour if the cooldown is reached)
         sliderFillImage = cooldownSlider.fillRect.GetComponent<Image>();
