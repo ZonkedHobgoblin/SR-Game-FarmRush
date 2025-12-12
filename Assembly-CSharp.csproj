@@ -64,7 +64,6 @@
     <Compile Include="Assets\Challenge 1\Scripts\PlayerControllerX.cs" />
     <Compile Include="Assets\Scripts\Unit2\projectile.cs" />
     <Compile Include="Assets\Scripts\Unit2\PrefabDestructEvent.cs" />
-    <Compile Include="Assets\Scripts\Unit1\cam.cs" />
     <Compile Include="Assets\Scripts\Unit2\ui.cs" />
     <Compile Include="Assets\Scripts\Unit2\GameStateManager.cs" />
     <Compile Include="Assets\Scripts\Unit2\GameBehaviourManager.cs" />
@@ -74,7 +73,6 @@
     <Compile Include="Assets\Scripts\Unit2\UIManager.cs" />
     <Compile Include="Assets\Scripts\Unit2\PlayerManager.cs" />
     <Compile Include="Assets\Challenge 1\Scripts\SpinProp.cs" />
-    <Compile Include="Assets\Scripts\Unit1\PC.cs" />
     <Compile Include="Assets\Scripts\Unit2\AnimalSpawnManager.cs" />
     <Compile Include="Assets\Scripts\Unit2\SaveManager.cs" />
     <Compile Include="Assets\Scripts\Unit2\animal.cs" />
