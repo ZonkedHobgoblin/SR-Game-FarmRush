@@ -58,24 +58,14 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.4f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Unit2\pc2.cs" />
-    <Compile Include="Assets\Scripts\Unit2\animalspawner.cs" />
-    <Compile Include="Assets\Challenge 1\Scripts\FollowPlayerX.cs" />
-    <Compile Include="Assets\Challenge 1\Scripts\PlayerControllerX.cs" />
-    <Compile Include="Assets\Scripts\Unit2\projectile.cs" />
-    <Compile Include="Assets\Scripts\Unit2\PrefabDestructEvent.cs" />
-    <Compile Include="Assets\Scripts\Unit2\ui.cs" />
-    <Compile Include="Assets\Scripts\Unit2\GameStateManager.cs" />
-    <Compile Include="Assets\Scripts\Unit2\GameBehaviourManager.cs" />
-    <Compile Include="Assets\Scripts\Unit2\AnimalScript.cs" />
-    <Compile Include="Assets\Scripts\Unit2\DefenseCleanup.cs" />
-    <Compile Include="Assets\Scripts\Unit2\ProjectileScript.cs" />
-    <Compile Include="Assets\Scripts\Unit2\UIManager.cs" />
-    <Compile Include="Assets\Scripts\Unit2\PlayerManager.cs" />
-    <Compile Include="Assets\Challenge 1\Scripts\SpinProp.cs" />
-    <Compile Include="Assets\Scripts\Unit2\AnimalSpawnManager.cs" />
-    <Compile Include="Assets\Scripts\Unit2\SaveManager.cs" />
-    <Compile Include="Assets\Scripts\Unit2\animal.cs" />
+    <Compile Include="Assets\Scripts\SaveManager.cs" />
+    <Compile Include="Assets\Scripts\AnimalScript.cs" />
+    <Compile Include="Assets\Scripts\PlayerManager.cs" />
+    <Compile Include="Assets\Scripts\GameStateManager.cs" />
+    <Compile Include="Assets\Scripts\ProjectileScript.cs" />
+    <Compile Include="Assets\Scripts\GameBehaviourManager.cs" />
+    <Compile Include="Assets\Scripts\AnimalSpawnManager.cs" />
+    <Compile Include="Assets\Scripts\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

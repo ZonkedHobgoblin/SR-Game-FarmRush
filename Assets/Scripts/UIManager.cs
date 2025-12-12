@@ -1,43 +1,65 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
-using System;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class ui : MonoBehaviour
 {
-    public int heyThere
+    public int heyThere;
     
 
-
+    
     private GameBehaviourManager gameBehaviourManager;
+
+    // Game Objects
+        // UI Elements
+            private TextMeshProUGUI scoreText;
+            private TextMeshProUGUI highScoreText;
+
+        // Gameover elements
+        private GameObject gameoverObjectsParent;
+        private TextMeshProUGUI gameoverText;
+
 
     private void OnEnable()
     {
         gameBehaviourManager = FindFirstObjectByType<GameBehaviourManager>();
         // Subscribe to the OnGameover action from our game behaviour manager
-        gameBehaviourManager.OnGameover += Gameover()
+        gameBehaviourManager.OnGameover += Gameover;
     }
 
     private void OnDisable()
     {
         // Destroy our subscription from the game behaviour manager to stop memory leaks (apparently?)
-        gameBehaviourManager.OnGameover -= Gameover()
+        gameBehaviourManager.OnGameover -= Gameover;
     }
 
     void Start()
     {
         // Get game objects/components
-        // Get the game behaviour manager
-        //gameBehaviourManager = FindFirstObjectByType<GameBehaviourManager>();
-    }
+            // Get the game behaviour manager
+            gameBehaviourManager = FindFirstObjectByType<GameBehaviourManager>();
 
-    private void Gameover()
+        // Get UI objects
+            
+
+            // Get game over UI elements
+                // Get parent of all game over UI objects for a simple active toggle
+                    gameoverObjectsParent = GameObject.Find("GameoverParent");
+                // Get gameover text
+                    gameoverText = GameObject.Find("GameoverText").GetComponent<TextMeshProUGUI>();
+    }           
+
+    void Gameover()
     {
-
+        GameOverStuff.SetActive(true);
+        gameoverpanel.SetActive(true);
+        gameovertext.text = $"GAME OVER\n\nScore: {score}\nHigh Score: {HighScoreUI}";
     }
 
 
@@ -119,7 +141,7 @@ public class ui : MonoBehaviour
         highscoretext.text = "High Score:\n" + HighScoreUI;
         if (gameStateManager.GetHealth() <= 0)
         {
-            Gameover();
+            //Gameover();
         }
         
         if ((PlayerCont2.cooldown == 1) && (fillImage.color!= Color.red))
@@ -141,13 +163,10 @@ public class ui : MonoBehaviour
         
 
     }
-    void Gameover()
-    {
-        GameOverStuff.SetActive(true);
-        gameoverpanel.SetActive(true);
-        gameovertext.text = $"GAME OVER\n\nScore: {score}\nHigh Score: {HighScoreUI}";
-        Time.timeScale = 0f;
-    }
+    //void Gameover()
+    //{
+        //Time.timeScale = 0f;
+    //}
 
     void ReloadScene()
     {
