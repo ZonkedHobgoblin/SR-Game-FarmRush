@@ -9,50 +9,34 @@ public class GameBehaviourManager : MonoBehaviour
     public event Action OnGameover;
 
 
-
-    private GameStateManager stateManager;
-    private SaveManager saveManager;
-    private AnimalSpawnManager animalSpawnManager;  
+    private ObjectReferenceManager objectReferenceManager;
 
 
     void Start()
     {
-        // Get Game objects and scripts
-            // Get managers from our game object
-                // Get GameStateManager
-                stateManager = gameObject.GetComponent<GameStateManager>();
-                // Get SaveManager
-                saveManager = gameObject.GetComponent<SaveManager>();
-
-            // Get other objects/components not on our object
-                // Get AnimalSpawnManager
-                animalSpawnManager = FindFirstObjectByType<AnimalSpawnManager>();
-
+        // Get our Object Reference Manager
+        objectReferenceManager = GetComponent<ObjectReferenceManager>();
 
         // Start spawning animals by calling the function to invoke repeating of spawn func
-            // Call spawn function on AnimalSpawnManager
-            animalSpawnManager.StartSpawning();
+        objectReferenceManager.animalSpawnManager.StartSpawning();
 
-
-        // Saving and loading of high score
-            // Load high score and set it on GameStateManager
-            stateManager.SetHighScore(saveManager.LoadData());
+        // Load high score and set it on GameStateManager
+        objectReferenceManager.stateManager.SetHighScore(objectReferenceManager.saveManager.LoadData());
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Highscore management
-        if (stateManager.GetScore() > stateManager.GetHighScore())
+        if (objectReferenceManager.stateManager.GetScore() > objectReferenceManager.stateManager.GetHighScore())
         {
-            stateManager.SetHighScore(stateManager.GetScore());
-            saveManager.SaveData(stateManager.GetHighScore());
+            objectReferenceManager.stateManager.SetHighScore(objectReferenceManager.stateManager.GetScore());
+            objectReferenceManager.saveManager.SaveData(objectReferenceManager.stateManager.GetHighScore());
         }
 
         // Gameover management
-        if ((stateManager.GetHealth() >= 0) && (!stateManager.GetIsGameover()))
+        if ((objectReferenceManager.stateManager.GetHealth() >= 0) && (!objectReferenceManager.stateManager.GetIsGameover()))
         {
-            stateManager.SetGameover(true);
+            objectReferenceManager.stateManager.SetGameover(true);
             OnGameover?.Invoke();
         }
 

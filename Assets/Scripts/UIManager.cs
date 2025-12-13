@@ -10,94 +10,32 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    #region Variable defenitions
-    #region Other/Assets
-    // Other/Assets
+    // Slider fill image
     public Image sliderFillImage;
-    #endregion
 
-    #region System Managers
-    // System managers
-    private GameBehaviourManager gameBehaviourManager;
-    private GameStateManager stateManager;
-    private PlayerManager playerManager;
-    #endregion
-
-    #region Game Objects
-    // Game Objects
-    #region UI Elements
-    // Main UI Elements
-    private TextMeshProUGUI scoreText;
-    private TextMeshProUGUI highScoreText;
-    private TextMeshProUGUI defenseCooldownText;
-    private Slider healthSlider;
-    private Slider cooldownSlider;
-    private Button retryButton;
-    private Button menuButton;
-    #endregion
-    #region Gameover elements
-    // Gameover elements
-    private GameObject gameoverObjectsParent;
-    private TextMeshProUGUI gameoverText;
-    #endregion
-    #endregion
-    #endregion
-
+    // Our Object reference manager
+    private ObjectReferenceManager objectReferenceManager;
     private void OnEnable()
     {
         // Subscribe to the OnGameover action from our game behaviour manager
-        gameBehaviourManager.OnGameover += Gameover;
+        objectReferenceManager.gameBehaviourManager.OnGameover += Gameover;
     }
 
     private void OnDisable()
     {
         // Destroy our subscription from the game behaviour manager to stop memory leaks (apparently?)
-        gameBehaviourManager.OnGameover -= Gameover;
+        objectReferenceManager.gameBehaviourManager.OnGameover -= Gameover;
     }
 
-    private void GetObjects()
-    {
-        // Get game objects/components
-        // Get the GameBehaviourManager
-        gameBehaviourManager = FindFirstObjectByType<GameBehaviourManager>();
-        // Get the GameStateManager
-        stateManager = FindFirstObjectByType<GameStateManager>();
-        // Get the PlayerManager
-        playerManager = FindFirstObjectByType<PlayerManager>();
-        // Get UI objects
-        // Get health slider
-        healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
-        // Get cooldown slider
-        cooldownSlider = GameObject.Find("CooldownSlider").GetComponent<Slider>();
-        // Get score text
-        scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
-        // Get high score text
-        highScoreText = GameObject.Find("HighScoreText").GetComponent<TextMeshProUGUI>();
-        // Get defense cooldown text
-        defenseCooldownText = GameObject.Find("DefenseCooldownText").GetComponent<TextMeshProUGUI>();
-        // Get game over UI elements
-        // Get parent of all game over UI objects for a simple active toggle
-        gameoverObjectsParent = GameObject.Find("GameoverParent");
-        // Get gameover text
-        gameoverText = GameObject.Find("GameoverText").GetComponent<TextMeshProUGUI>();
-        // Get Gameover UI Buttons
-        // Get Retry Button
-        retryButton = GameObject.Find("RetryButton").GetComponent<Button>();
-        // Get Menu Button
-        menuButton = GameObject.Find("MenuButton").GetComponent<Button>();
-    }
     private void Awake()
     {
-        // Get and set all object references - seperate function to clean everything up
-        GetObjects();
-
         // Set the fill image (So we can change the colour if the cooldown is reached)
-        sliderFillImage = cooldownSlider.fillRect.GetComponent<Image>();
+        sliderFillImage = objectReferenceManager.uiCooldownSlider.fillRect.GetComponent<Image>();
 
         // Button listener setup
-        Button btn = retryButton.GetComponent<Button>();
+        Button btn = objectReferenceManager.uiRetryButton.GetComponent<Button>();
         //btn.onClick.AddListener(ReloadScene);
-        Button btn2 = menuButton.GetComponent<Button>();
+        Button btn2 = objectReferenceManager.uiMenuButton.GetComponent<Button>();
         //btn2.onClick.AddListener(LoadMenuScene);
     }
 
@@ -105,36 +43,32 @@ public class UIManager : MonoBehaviour
     {
         // Grab and the variables from out GameStateManager and update the UI elements
         // Set Score text
-        scoreText.text = stateManager.GetScore().ToString();
+        objectReferenceManager.uiScoreText.text = objectReferenceManager.stateManager.GetScore().ToString();
 
         // Set high score text
-        highScoreText.text = stateManager.GetHighScore().ToString();
+        objectReferenceManager.uiHighScoreText.text = objectReferenceManager.stateManager.GetHighScore().ToString();
 
         // Set defense cooldown text
-        if (playerManager.GetDefenseCooldown())
+        if (objectReferenceManager.playerManager.GetDefenseCooldown())
         {
-               defenseCooldownText.text = "Defense ready";
+               objectReferenceManager.uiDefenseCooldownText.text = "Defense ready";
          }
         else
         {
-            defenseCooldownText.text = "Defense unavailable";
+            objectReferenceManager.uiDefenseCooldownText.text = "Defense unavailable";
         }
 
         // Set health slider
-        healthSlider.value = stateManager.GetHealth() / 10.0f;
+        objectReferenceManager.uiHealthSlider.value = objectReferenceManager.stateManager.GetHealth() / 10.0f;
 
         // Set cooldown slider
-        cooldownSlider.value = playerManager.GetCooldown();
+        objectReferenceManager.uiCooldownSlider.value = objectReferenceManager.playerManager.GetCooldown();
     }
     void Gameover()
     {
-        gameoverObjectsParent.SetActive(true);
-        gameoverText.text = $"GAME OVER\n\nScore: {stateManager.GetScore().ToString()}\nHigh Score: {stateManager.GetHighScore().ToString()}";
+        objectReferenceManager.uiGameoverObjectsParent.SetActive(true);
+        objectReferenceManager.uiGameoverText.text = $"GAME OVER\n\nScore: {objectReferenceManager.stateManager.GetScore().ToString()}\nHigh Score: {objectReferenceManager.stateManager.GetHighScore().ToString()}";
     }
 
 
     }
-    //void Gameover()
-    //{
-        //Time.timeScale = 0f;
-    //}
