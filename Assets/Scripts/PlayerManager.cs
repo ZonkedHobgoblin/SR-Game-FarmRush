@@ -94,7 +94,9 @@ public class PlayerManager : MonoBehaviour
 
 
 
-
+    /// <summary>
+    /// Old script below this point
+    /// </summary>
     private float animvalue;
 
     // Update is called once per frame
