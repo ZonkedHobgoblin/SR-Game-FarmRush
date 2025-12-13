@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
 
-public class projectile : MonoBehaviour
+public class ProjectileScript : MonoBehaviour
 {
     //vars
     public float speed = 45f;

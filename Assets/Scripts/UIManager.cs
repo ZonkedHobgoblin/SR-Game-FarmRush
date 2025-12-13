@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     // Slider fill image
-    public Image sliderFillImage;
+    private Image sliderFillImage;
 
     // Our Object reference manager
     private ObjectReferenceManager objectReferenceManager;
@@ -29,8 +29,11 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        // Set the fill image (So we can change the colour if the cooldown is reached)
-        sliderFillImage = objectReferenceManager.uiCooldownSlider.fillRect.GetComponent<Image>();
+        // Get our ObjectReferenceManager
+        objectReferenceManager = FindFirstObjectByType<ObjectReferenceManager>();
+
+        // Get and set the fill image (So we can change the colour if the cooldown is reached)
+        sliderFillImage = Resources.Load("Images/SliderFillImage") as Image;
 
         // Button listener setup
         Button btn = objectReferenceManager.uiRetryButton.GetComponent<Button>();

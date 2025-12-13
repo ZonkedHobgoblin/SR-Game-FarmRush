@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
-public class animal : MonoBehaviour
+public class AnimalScript : MonoBehaviour
 {
     //vars
     public float[] speed;

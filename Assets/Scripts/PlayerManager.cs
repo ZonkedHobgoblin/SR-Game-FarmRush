@@ -1,49 +1,87 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    private GameObject projectilePrefab;
+    private PrefabAssetType defensePrefab;
+    private PrefabAssetType ghostedDefensePrefab;
+    private bool isDefenseCooldown;
+    private bool isPlayerCooldown;
+    private float playerCooldown;
+    private float playerHorizontalInput;
+    private float playerSpeed;
 
 
 
 
 
-
-
-
-
-
-
+// Variable calls
     public bool GetDefenseCooldown()
     {
         return isDefenseCooldown;
     }
+
+    public void SetDefenseCooldown(bool cooldown)
+    {
+        isDefenseCooldown = cooldown;
+    }
     public float GetCooldown()
     {
-        return cooldown;
+        return playerCooldown;
     }
 
-
-    public float horizontalInput;
-    public float speed = 10.0f;
-    public GameObject projectile;
-    public GameObject defense;
-    public GameObject ghostDefensePrefab;
-    private GameObject ghostDefense;
-    private bool isShooting = false;
-    private float animvalue;
-    public float cooldown = 0;
-    public bool isCooldown = false;
-    private bool isCoolingdown = false;
-    public bool isDefenseCooldown = false;
-    // Start is called before the first frame update
-    void Start()
+    public bool GetIsPlayerCooldown()
     {
-        
+        return isPlayerCooldown;
     }
+
+    public void SetCooldown(float cooldown)
+    {
+        playerCooldown = cooldown;
+    }
+
+    public float GetPlayerSpeed()
+    {
+        return playerSpeed;
+    }
+    public void SetPlayerSpeed(float speed)
+    {
+        playerSpeed = speed;
+    }
+//////////////////////////////////////////////////////////
+
+    private void AddMovement(float speed)
+    {
+        transform.Translate(Vector3.right * playerHorizontalInput * Time.deltaTime * speed);
+    }
+
+    private void ClampPlayerPos(float beginningPos, float endingPos)
+    {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, beginningPos, endingPos), transform.position.y, transform.position.z);
+    }
+    private void Update()
+    {
+        // Update our input
+        playerHorizontalInput = Input.GetAxis("Horizontal");
+        // Add movement
+        AddMovement(playerSpeed);
+    }
+
+
+
+
+
+
+
+
+
+
+    private float animvalue;
 
     // Update is called once per frame
 
@@ -110,7 +148,7 @@ public class PlayerManager : MonoBehaviour
     {
         isShooting = true;
         cooldown = (cooldown + 0.1f);
-        Instantiate(projectile, transform.position, projectile.transform.rotation);
+        Instantiate(projectile, transform.position, ProjectileScript.transform.rotation);
 
         yield return new WaitForSeconds(0.2f);
         isShooting = false;
