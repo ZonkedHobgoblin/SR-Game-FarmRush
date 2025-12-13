@@ -8,19 +8,25 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     private GameObject projectilePrefab;
-    private PrefabAssetType defensePrefab;
-    private PrefabAssetType ghostedDefensePrefab;
+    private GameObject defensePrefab;
+    private GameObject ghostedDefensePrefab;
     private bool isDefenseCooldown;
     private bool isPlayerCooldown;
     private float playerCooldown;
     private float playerHorizontalInput;
     private float playerSpeed;
 
+    private void Awake()
+    {
+        // Load our assets
+        projectilePrefab = Resources.Load("Prefabs/ProjectilePrefab") as GameObject;
+        defensePrefab = Resources.Load("Prefabs/DefensePrefab") as GameObject;
+        ghostedDefensePrefab = Resources.Load("Prefabs/GhostedDefensePrefab") as GameObject;
+    }
 
 
 
-
-// Variable calls
+    // Variable calls
     public bool GetDefenseCooldown()
     {
         return isDefenseCooldown;
@@ -62,7 +68,13 @@ public class PlayerManager : MonoBehaviour
 
     private void ClampPlayerPos(float beginningPos, float endingPos)
     {
+        // Clamps our X axis with the two specified values
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, beginningPos, endingPos), transform.position.y, transform.position.z);
+    }
+
+    private void FireProjectile()
+    {
+        Instantiate(projectilePrefab, transform.position, new Quaternion(0,0,0,0));
     }
     private void Update()
     {
@@ -70,6 +82,8 @@ public class PlayerManager : MonoBehaviour
         playerHorizontalInput = Input.GetAxis("Horizontal");
         // Add movement
         AddMovement(playerSpeed);
+        // Clamp our location to avoid overstepping our bounds
+        ClampPlayerPos(-12f, 12f);
     }
 
 
@@ -144,7 +158,7 @@ public class PlayerManager : MonoBehaviour
         GetComponent<Animator>().SetFloat("Speed_f", animvalue);
     }
     //cooldown between shots
-    IEnumerator FireProjectile()
+    //IEnumerator FireProjectile()
     {
         isShooting = true;
         cooldown = (cooldown + 0.1f);
