@@ -4,9 +4,12 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
+    private readonly InputAction fireAction;
+    private readonly InputAction moveAction;
     private GameObject projectilePrefab;
     private GameObject defensePrefab;
     private GameObject ghostedDefensePrefab;
@@ -23,8 +26,6 @@ public class PlayerManager : MonoBehaviour
         defensePrefab = Resources.Load("Prefabs/DefensePrefab") as GameObject;
         ghostedDefensePrefab = Resources.Load("Prefabs/GhostedDefensePrefab") as GameObject;
     }
-
-
 
     // Variable calls
     public bool GetDefenseCooldown()
@@ -59,8 +60,12 @@ public class PlayerManager : MonoBehaviour
     {
         playerSpeed = speed;
     }
-//////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
 
+    private void Start()
+    {
+        // Add a listener for our space key to fire projectile
+    }
     private void AddMovement(float speed)
     {
         transform.Translate(Vector3.right * playerHorizontalInput * Time.deltaTime * speed);
