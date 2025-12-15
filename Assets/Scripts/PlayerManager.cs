@@ -8,15 +8,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
-    private readonly InputAction fireAction;
-    private readonly InputAction moveAction;
+    private PlayerControls controls;
     private GameObject projectilePrefab;
     private GameObject defensePrefab;
     private GameObject ghostedDefensePrefab;
     private bool isDefenseCooldown;
     private bool isPlayerCooldown;
     private float playerCooldown;
-    private float playerHorizontalInput;
+    private float playerHorizontalInput = 0f;
     private float playerSpeed;
 
     private void Awake()
@@ -25,6 +24,23 @@ public class PlayerManager : MonoBehaviour
         projectilePrefab = Resources.Load("Prefabs/ProjectilePrefab") as GameObject;
         defensePrefab = Resources.Load("Prefabs/DefensePrefab") as GameObject;
         ghostedDefensePrefab = Resources.Load("Prefabs/GhostedDefensePrefab") as GameObject;
+
+        // Load our control map
+        controls = new PlayerControls();
+        controls.DefaultMap.Fire.performed += context => FireProjectile();
+        controls.DefaultMap.Horizontal.performed += context => SetInput(context.ReadValue<float>());
+        controls.DefaultMap.Horizontal.canceled += context => SetInput(context.ReadValue<float>());
+    }
+
+    // Enable/Disable our controls when used/not used
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
     }
 
     // Variable calls
@@ -60,12 +76,12 @@ public class PlayerManager : MonoBehaviour
     {
         playerSpeed = speed;
     }
-    //////////////////////////////////////////////////////////
 
-    private void Start()
+    private void SetInput(float input)
     {
-        // Add a listener for our space key to fire projectile
+        playerHorizontalInput = input;
     }
+    //////////////////////////////////////////////////////////
     private void AddMovement(float speed)
     {
         transform.Translate(Vector3.right * playerHorizontalInput * Time.deltaTime * speed);
@@ -83,8 +99,6 @@ public class PlayerManager : MonoBehaviour
     }
     private void Update()
     {
-        // Update our input
-        playerHorizontalInput = Input.GetAxis("Horizontal");
         // Add movement
         AddMovement(playerSpeed);
         // Clamp our location to avoid overstepping our bounds
@@ -198,5 +212,5 @@ public class PlayerManager : MonoBehaviour
     {
         defenseCooldown = true;
         Instantiate(defense, new Vector3(transform.position.x, transform.position.y, (transform.position.z + 8)), defense.transform.rotation);
-    }
+}
 }
