@@ -68,6 +68,7 @@ public class PlayerManager : MonoBehaviour
 
     public void SetCooldown(float cooldown)
     {
+        cooldown = Mathf.Clamp01(cooldown);
         playerCooldown = cooldown;
     }
 
@@ -97,6 +98,12 @@ public class PlayerManager : MonoBehaviour
         playerHorizontalInput = input;
     }
     //////////////////////////////////////////////////////////
+
+    private void Start()
+    {
+        InvokeRepeating("LowerCooldown", 0, 0.2f);
+    }
+
     private void AddMovement(float speed)
     {
         transform.Translate(Vector3.right * playerHorizontalInput * Time.deltaTime * speed);
@@ -108,24 +115,45 @@ public class PlayerManager : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, beginningPos, endingPos), transform.position.y, transform.position.z);
     }
 
-    private void StartShooting()
+    private void StartFiring()
     {
-        // When StartShooting is triggered, our FireProjectile method should constantly repeat every second value given in playerFireRate
+        // When StartFiring is triggered, our FireProjectile method should constantly repeat every second value given in playerFireRate
         InvokeRepeating("FireProjectile", 0, playerFireRate);
     }
 
-    private void StopShooting()
+    private void StopFiring()
     {
-        // When StopShooting is triggered, it'll stop our invoke repeating. Should be toggelled on key raise/input canceled
+        // When StopFiring is triggered, it'll stop our invoke repeating. Should be toggeled on key raise/input canceled
         CancelInvoke("FireProjectile");
     }
     private void FireProjectile()
     {
         if (!isPlayerCooldown)
         {
-            Instantiate(projectilePrefab, transform.position, new Quaternion(0,0,0,0));
+            Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            SetCooldown(GetCooldown() + 0.1f);
+            if (playerCooldown >= 1)
+            {
+                StartCoroutine(StartCooldown());
+            }
         }
     }
+
+    private void LowerCooldown()
+    {
+        if (!isPlayerCooldown)
+        {
+        SetCooldown(GetCooldown() - 0.1f);
+        }
+    }
+
+    private IEnumerator StartCooldown()
+    {
+            isPlayerCooldown = true;
+            yield return new WaitForSeconds(5);
+            isPlayerCooldown = false;
+    }
+
     private void Update()
     {
         // Add movement
