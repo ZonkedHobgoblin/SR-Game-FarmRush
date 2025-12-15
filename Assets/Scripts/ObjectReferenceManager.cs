@@ -16,6 +16,7 @@ public class ObjectReferenceManager : MonoBehaviour
     public SaveManager saveManager;
     public GameStateManager stateManager;
     public GameBehaviourManager gameBehaviourManager;
+    public TimescaleManager timescaleManager;
     #endregion
     #region UI Elements
     public TextMeshProUGUI uiScoreText;
@@ -36,6 +37,7 @@ public class ObjectReferenceManager : MonoBehaviour
         saveManager = GetComponent<SaveManager>();
         stateManager = GetComponent<GameStateManager>();
         gameBehaviourManager = GetComponent<GameBehaviourManager>();
+        timescaleManager = GetComponent<TimescaleManager>();
         playerManager = FindFirstObjectByType<PlayerManager>();
         uiManager = FindFirstObjectByType<UIManager>();
 

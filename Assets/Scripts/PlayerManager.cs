@@ -17,6 +17,7 @@ public class PlayerManager : MonoBehaviour
     private float playerCooldown;
     private float playerHorizontalInput = 0f;
     private float playerSpeed;
+    private float playerFireRate = 0.5f;
 
     private void Awake()
     {
@@ -27,7 +28,8 @@ public class PlayerManager : MonoBehaviour
 
         // Load our control map
         controls = new PlayerControls();
-        controls.DefaultMap.Fire.performed += context => FireProjectile();
+        controls.DefaultMap.Fire.performed += context => StartFiring();
+        controls.DefaultMap.Fire.canceled += context => StopFiring();
         controls.DefaultMap.Horizontal.performed += context => SetInput(context.ReadValue<float>());
         controls.DefaultMap.Horizontal.canceled += context => SetInput(context.ReadValue<float>());
     }
@@ -43,7 +45,8 @@ public class PlayerManager : MonoBehaviour
         controls.Disable();
     }
 
-    // Variable calls
+    //////////////////////////////////////////////////////////
+    // Variable call methods
     public bool GetDefenseCooldown()
     {
         return isDefenseCooldown;
@@ -77,6 +80,18 @@ public class PlayerManager : MonoBehaviour
         playerSpeed = speed;
     }
 
+    public void SetPlayerFireRate(float rate)
+    {
+        playerFireRate = rate;
+    }
+
+    public float GetPlayerFireRate()
+    {
+        return playerFireRate;
+    }
+
+
+
     private void SetInput(float input)
     {
         playerHorizontalInput = input;
@@ -93,9 +108,23 @@ public class PlayerManager : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, beginningPos, endingPos), transform.position.y, transform.position.z);
     }
 
+    private void StartShooting()
+    {
+        // When StartShooting is triggered, our FireProjectile method should constantly repeat every second value given in playerFireRate
+        InvokeRepeating("FireProjectile", 0, playerFireRate);
+    }
+
+    private void StopShooting()
+    {
+        // When StopShooting is triggered, it'll stop our invoke repeating. Should be toggelled on key raise/input canceled
+        CancelInvoke("FireProjectile");
+    }
     private void FireProjectile()
     {
-        Instantiate(projectilePrefab, transform.position, new Quaternion(0,0,0,0));
+        if (!isPlayerCooldown)
+        {
+            Instantiate(projectilePrefab, transform.position, new Quaternion(0,0,0,0));
+        }
     }
     private void Update()
     {
@@ -122,12 +151,6 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        //Movement stuff VVVVVVVVVVVVVVVVV
-        //input and movement
-        horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
-        //clamp x axis because using if statements for this is stupid
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -12f, 12f), transform.position.y, transform.position.z);
         
         //projectile stuff VVVVVVVVVVVV
         if (Input.GetKey(KeyCode.Space) && !isShooting && !isCooldown)

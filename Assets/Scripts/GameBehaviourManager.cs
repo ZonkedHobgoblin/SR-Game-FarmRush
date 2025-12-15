@@ -11,35 +11,51 @@ public class GameBehaviourManager : MonoBehaviour
 
     private ObjectReferenceManager objectReferenceManager;
 
-
-    void Start()
+    private void Awake()
     {
         // Get our Object Reference Manager
         objectReferenceManager = GetComponent<ObjectReferenceManager>();
+    }
+    void Start()
+    {
+        // Load high score and set it on GameStateManager
+        objectReferenceManager.stateManager.SetHighScore(objectReferenceManager.saveManager.LoadData());
 
         // Start spawning animals by calling the function to invoke repeating of spawn func
         objectReferenceManager.animalSpawnManager.StartSpawning();
-
-        // Load high score and set it on GameStateManager
-        objectReferenceManager.stateManager.SetHighScore(objectReferenceManager.saveManager.LoadData());
     }
 
-    void Update()
+    public void IncrementHealth(int health)
     {
-        // Highscore management
+        objectReferenceManager.stateManager.SetHealth(objectReferenceManager.stateManager.GetHealth() + health);
+        CheckGameover();
+
+    }
+
+    public void IncrementScore(int score)
+    {
+        objectReferenceManager.stateManager.SetScore(objectReferenceManager.stateManager.GetScore() + score);
+        UpdateHighScore();
+    }
+
+    private void UpdateHighScore()
+    {
         if (objectReferenceManager.stateManager.GetScore() > objectReferenceManager.stateManager.GetHighScore())
         {
             objectReferenceManager.stateManager.SetHighScore(objectReferenceManager.stateManager.GetScore());
             objectReferenceManager.saveManager.SaveData(objectReferenceManager.stateManager.GetHighScore());
         }
+    }
 
+    private void CheckGameover()
+    {
         // Gameover management
-        if ((objectReferenceManager.stateManager.GetHealth() >= 0) && (!objectReferenceManager.stateManager.GetIsGameover()))
+        if ((objectReferenceManager.stateManager.GetHealth() <= 0) && (!objectReferenceManager.stateManager.GetIsGameover()))
         {
             objectReferenceManager.stateManager.SetGameover(true);
             OnGameover?.Invoke();
+            objectReferenceManager.timescaleManager.PauseTimescale();
         }
-
-
     }
+
 }

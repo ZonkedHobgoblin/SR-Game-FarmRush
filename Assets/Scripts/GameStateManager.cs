@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -13,7 +15,9 @@ public class GameStateManager : MonoBehaviour
     // Health funciton calls
     public void SetHealth(int health)
     {
+        Mathf.Clamp(health, 0, 10);
         playerHealth = health;
+        Debug.Log($"Health: {health}");
     }
     public int GetHealth()
     {
