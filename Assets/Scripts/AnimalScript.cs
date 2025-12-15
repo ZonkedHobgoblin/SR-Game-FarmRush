@@ -8,14 +8,16 @@ public class AnimalScript : MonoBehaviour
 {
     //vars
     public float[] speed;
-    private float bound = 30;
     public GameObject[] prefabs;
-    public ui Canvas;
-    private float animalSpeed = 4.0f;
-    private GameObject spawnedmodel;
-    // ienumerator cause unity too slow with the anim stuff
+
+    private float boundsZ = 30;
+    private ObjectReferenceManager objectReferenceManager;
+    private float animalSpeed;
     void Start()
     {
+        // Get our Reference manager
+        objectReferenceManager = FindFirstObjectByType<ObjectReferenceManager>();
+
         //disable mesh renderer and filter (Visual of model for editor)
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<MeshFilter>().mesh = null;
@@ -26,7 +28,6 @@ public class AnimalScript : MonoBehaviour
         GameObject spawnedModel = Instantiate(prefabs[ranNum], transform);
         //randomize from array to select model
         animalSpeed = speed[ranNum];
-        Canvas = FindObjectOfType<ui>();
     }
 
     // Update is called once per frame
@@ -34,16 +35,16 @@ public class AnimalScript : MonoBehaviour
     {
         transform.Translate(Vector3.forward * Time.deltaTime * animalSpeed);
         //delete the object when too far
-        if (transform.position.z > bound || transform.position.z < -(bound - 20))
+        if (transform.position.z > boundsZ || transform.position.z < -(boundsZ - 20))
         {
             Destroy(gameObject);
-            Canvas.health -= 1;
+            objectReferenceManager.gameBehaviourManager.IncrementHealth(-1);
         }
     }
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
         Destroy(other.gameObject);
-        Canvas.score += 1;
+        objectReferenceManager.gameBehaviourManager.IncrementScore(1);
     }
 }
