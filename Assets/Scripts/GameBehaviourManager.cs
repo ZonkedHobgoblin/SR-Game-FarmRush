@@ -7,6 +7,8 @@ using System;
 public class GameBehaviourManager : MonoBehaviour
 {
     public event Action OnGameover;
+    public event Action OnDamage;
+    public event Action OnScore;
 
 
     private ObjectReferenceManager objectReferenceManager;
@@ -28,6 +30,7 @@ public class GameBehaviourManager : MonoBehaviour
     public void IncrementHealth(int health)
     {
         objectReferenceManager.stateManager.SetHealth(objectReferenceManager.stateManager.GetHealth() + health);
+        OnDamage?.Invoke();
         CheckGameover();
 
     }
@@ -35,6 +38,7 @@ public class GameBehaviourManager : MonoBehaviour
     public void IncrementScore(int score)
     {
         objectReferenceManager.stateManager.SetScore(objectReferenceManager.stateManager.GetScore() + score);
+        OnScore?.Invoke();
         UpdateHighScore();
     }
 
