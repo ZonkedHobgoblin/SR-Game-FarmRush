@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
             objectReferenceManager.gameBehaviourManager.OnDamage += OnDamage;
             objectReferenceManager.gameBehaviourManager.OnScore += OnScore;
             objectReferenceManager.gameBehaviourManager.OnGameover += OnGameover;
-            objectReferenceManager.gameBehaviourManager.TogglePauseMenu += TogglePauseMenu;
+            objectReferenceManager.gameBehaviourManager.OnPause += TogglePauseMenu;
         }
     }
 
@@ -62,11 +62,18 @@ public class UIManager : MonoBehaviour
         }
 
     // Button listener setup
-    Button btn = objectReferenceManager.uiRetryButton.GetComponent<Button>();
-    btn.onClick.AddListener(objectReferenceManager.gameBehaviourManager.ReloadScene);
-    Button btn2 = objectReferenceManager.uiMenuButton.GetComponent<Button>();
-    btn2.onClick.AddListener(objectReferenceManager.gameBehaviourManager.LoadMenuScene);
-}
+    Button retryButton = objectReferenceManager.uiRetryButton.GetComponent<Button>();
+    retryButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.ReloadScene);
+    Button menuButton = objectReferenceManager.uiMenuButton.GetComponent<Button>();
+    menuButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.LoadMenuScene);
+    Button resumeButton = objectReferenceManager.uiResumeButton.GetComponent<Button>();
+    resumeButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.TogglePauseMenu);
+    Button pauseMenuButton = objectReferenceManager.uiPauseMenuButton.GetComponent<Button>();
+    pauseMenuButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.LoadMenuScene);
+    Button quitButton = objectReferenceManager.uiQuitButton.GetComponent<Button>();
+    quitButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.QuitGame);
+
+    }
 
     private void Start()
     {
@@ -81,17 +88,17 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         // Set defense cooldown text
-        if (!objectReferenceManager.playerManager.GetDefenseCooldown() && objectReferenceManager.uiDefenseCooldownText.text != "Defense ready")
+        if (!objectReferenceManager.playerController.GetDefenseCooldown() && objectReferenceManager.uiDefenseCooldownText.text != "Defense ready")
         {
                objectReferenceManager.uiDefenseCooldownText.text = "Defense ready";
          }
-        else if (objectReferenceManager.playerManager.GetDefenseCooldown() && objectReferenceManager.uiDefenseCooldownText.text != "Defense unavailable")
+        else if (objectReferenceManager.playerController.GetDefenseCooldown() && objectReferenceManager.uiDefenseCooldownText.text != "Defense unavailable")
         {
             objectReferenceManager.uiDefenseCooldownText.text = "Defense unavailable";
         }
         // Set cooldown slider value and colour
-        objectReferenceManager.uiCooldownSlider.value = objectReferenceManager.playerManager.GetCooldown();
-        if (objectReferenceManager.playerManager.GetIsPlayerCooldown())
+        objectReferenceManager.uiCooldownSlider.value = objectReferenceManager.playerController.GetCooldown();
+        if (objectReferenceManager.playerController.GetIsPlayerCooldown())
         {
             sliderFillImage.color = Color.red;
         }

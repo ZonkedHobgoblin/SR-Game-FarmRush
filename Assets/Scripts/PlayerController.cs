@@ -7,8 +7,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+    private ObjectReferenceManager objectReferenceManager;
     private PlayerControls controls;
     private GameObject projectilePrefab;
     private GameObject defensePrefab;
@@ -17,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     private bool isDefenseCooldown;
     private bool isGhostedDefense;
     private bool isPlayerCooldown;
+    private bool canPlayerFire;
     private float playerCooldown;
     private float playerHorizontalInput = 0f;
     private float playerSpeed = 10;
@@ -30,6 +32,9 @@ public class PlayerManager : MonoBehaviour
         defensePrefab = Resources.Load("Prefabs/DefensePrefab") as GameObject;
         ghostedDefensePrefab = Resources.Load("Prefabs/GhostedDefensePrefab") as GameObject;
 
+        // Get our Object Reference Manager
+        objectReferenceManager = FindFirstObjectByType<ObjectReferenceManager>();
+
         // Load our control map
         controls = new PlayerControls();
         controls.DefaultMap.SpawnDefense.performed += context => GhostDefense();
@@ -38,6 +43,7 @@ public class PlayerManager : MonoBehaviour
         controls.DefaultMap.Fire.canceled += context => StopFiring();
         controls.DefaultMap.Horizontal.performed += context => SetInput(context.ReadValue<float>());
         controls.DefaultMap.Horizontal.canceled += context => SetInput(0);
+        controls.DefaultMap.Pause.performed += context => objectReferenceManager.gameBehaviourManager.TogglePauseMenu();
     }
 
     // Enable/Disable our controls when used/not used
@@ -97,6 +103,16 @@ public class PlayerManager : MonoBehaviour
         return playerFireRate;
     }
 
+    public bool GetCanPlayerFire()
+    {
+        return canPlayerFire;
+    }
+
+    public void SetCanPlayerFire(bool canFire)
+    {
+        canPlayerFire = canFire;
+    }
+
     public void SetPlayerDefenseCooldownTime(float time)
     {
         defenseCooldownTime = time;
@@ -133,11 +149,14 @@ public class PlayerManager : MonoBehaviour
 
     private void StartFiring()
     {
-        // When StartFiring is triggered, our FireProjectile method should constantly repeat every second value given in playerFireRate
-        InvokeRepeating("FireProjectile", 0, playerFireRate);
+        if (canPlayerFire)
+        {
+            // When StartFiring is triggered, our FireProjectile method should constantly repeat every second value given in playerFireRate
+            InvokeRepeating("FireProjectile", 0, playerFireRate);
 
-        // Stop the cooldown so we don't cooldown while shooting
-        CancelInvoke("LowerCooldown");
+            // Stop the cooldown so we don't cooldown while shooting
+            CancelInvoke("LowerCooldown");
+        }
     }
 
     private void StopFiring()
@@ -220,6 +239,5 @@ public class PlayerManager : MonoBehaviour
             runtimeGhostDefensePrefab.transform.position = new Vector3(transform.position.x, transform.position.y, 6f);
         }
     }
-
     
 }

@@ -11,6 +11,7 @@ public class GameBehaviourManager : MonoBehaviour
     public event Action OnGameover;
     public event Action OnDamage;
     public event Action OnScore;
+    public event Action OnPause;
 
 
     private ObjectReferenceManager objectReferenceManager;
@@ -27,6 +28,9 @@ public class GameBehaviourManager : MonoBehaviour
 
         // Start spawning animals by calling the function to invoke repeating of spawn func
         objectReferenceManager.animalSpawnManager.StartSpawning();
+
+        // Allow our player to fire
+        objectReferenceManager.playerController.SetCanPlayerFire(true);
     }
 
     public void IncrementHealth(int health)
@@ -59,13 +63,29 @@ public class GameBehaviourManager : MonoBehaviour
 
     public void TogglePauseMenu()
     {
+        Debug.Log("Pause toggled");
         objectReferenceManager.stateManager.SetIsPaused(!objectReferenceManager.stateManager.GetIsPaused());
         if (objectReferenceManager.stateManager.GetIsPaused())
         {
+            objectReferenceManager.playerController.SetCanPlayerFire(false);
             objectReferenceManager.timescaleManager.PauseTimescale();
+            OnPause?.Invoke();
 
         }
 
+        else
+        {
+            objectReferenceManager.timescaleManager.PauseTimescale();
+            objectReferenceManager.timescaleManager.UnpauseTimescale();
+            OnPause?.Invoke();
+            objectReferenceManager.playerController.SetCanPlayerFire(true);
+        }
+
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
 
@@ -86,7 +106,7 @@ public class GameBehaviourManager : MonoBehaviour
             objectReferenceManager.stateManager.SetGameover(true);
             OnGameover?.Invoke();
             objectReferenceManager.timescaleManager.PauseTimescale();
-            objectReferenceManager.playerManager.enabled = false;
+            objectReferenceManager.playerController.enabled = false;
             objectReferenceManager.stateManager.enabled = false;
             objectReferenceManager.saveManager.enabled = false;
             objectReferenceManager.animalSpawnManager.enabled = false;

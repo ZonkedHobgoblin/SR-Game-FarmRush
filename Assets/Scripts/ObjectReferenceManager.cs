@@ -10,7 +10,7 @@ public class ObjectReferenceManager : MonoBehaviour
 
     #region Variables
     #region Scripts
-    public PlayerManager playerManager;
+    public PlayerController playerController;
     public AnimalSpawnManager animalSpawnManager;
     public UIManager uiManager;
     public SaveManager saveManager;
@@ -42,7 +42,7 @@ public class ObjectReferenceManager : MonoBehaviour
         stateManager = GetComponent<GameStateManager>();
         gameBehaviourManager = GetComponent<GameBehaviourManager>();
         timescaleManager = GetComponent<TimescaleManager>();
-        playerManager = FindFirstObjectByType<PlayerManager>();
+        playerController = FindFirstObjectByType<PlayerController>();
         uiManager = FindFirstObjectByType<UIManager>();
 
 
