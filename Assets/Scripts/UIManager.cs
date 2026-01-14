@@ -34,10 +34,7 @@ public class UIManager : MonoBehaviour
             objectReferenceManager.gameBehaviourManager.OnDamage += OnDamage;
             objectReferenceManager.gameBehaviourManager.OnScore += OnScore;
             objectReferenceManager.gameBehaviourManager.OnGameover += OnGameover;
-        }
-        else
-        {
-            Debug.LogWarning("UIManager: Could not subscribe to events because ObjectReferenceManager or GameBehaviourManager is missing.");
+            objectReferenceManager.gameBehaviourManager.TogglePauseMenu += TogglePauseMenu;
         }
     }
 
@@ -73,8 +70,9 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        // Hide gameover stuff
+        // Hide gameover and pause menu stuff
         objectReferenceManager.uiGameoverObjectsParent.SetActive(false);
+        objectReferenceManager.uiPauseMenuObjectsParent.SetActive(false);
 
         // Update our score & high score
         OnScore();
@@ -83,11 +81,11 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         // Set defense cooldown text
-        if (objectReferenceManager.playerManager.GetDefenseCooldown() && objectReferenceManager.uiDefenseCooldownText.text != "Defense ready")
+        if (!objectReferenceManager.playerManager.GetDefenseCooldown() && objectReferenceManager.uiDefenseCooldownText.text != "Defense ready")
         {
                objectReferenceManager.uiDefenseCooldownText.text = "Defense ready";
          }
-        else if (!objectReferenceManager.playerManager.GetDefenseCooldown() && objectReferenceManager.uiDefenseCooldownText.text != "Defense unavailable")
+        else if (objectReferenceManager.playerManager.GetDefenseCooldown() && objectReferenceManager.uiDefenseCooldownText.text != "Defense unavailable")
         {
             objectReferenceManager.uiDefenseCooldownText.text = "Defense unavailable";
         }
@@ -101,6 +99,7 @@ public class UIManager : MonoBehaviour
         {
             sliderFillImage.color = Color.yellow;
         }
+
     }
 
     private void OnScore()
@@ -125,5 +124,16 @@ public class UIManager : MonoBehaviour
         objectReferenceManager.uiGameoverText.text = $"GAME OVER\n\nScore: {objectReferenceManager.stateManager.GetScore().ToString()}\nHigh Score: {objectReferenceManager.stateManager.GetHighScore().ToString()}";
     }
 
+    private void TogglePauseMenu()
+    {
+        if (objectReferenceManager.stateManager.GetIsPaused())
+        {
+            objectReferenceManager.uiPauseMenuObjectsParent.SetActive(true);
+        }
+        else
+        {
+            objectReferenceManager.uiPauseMenuObjectsParent.SetActive(false);
+        }
+    }
 
     }

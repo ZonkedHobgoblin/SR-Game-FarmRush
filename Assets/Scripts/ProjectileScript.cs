@@ -23,7 +23,7 @@ public class ProjectileScript : MonoBehaviour
     {
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
         //delete the object when too far
-        if (transform.position.z > bound || transform.position.z < -(bound - 20))
+        if (transform.position.z > bound || transform.position.z < -(bound - 20) || transform.position.y > 5 || transform.position.y < -4)
         {
             Destroy(gameObject);
         }

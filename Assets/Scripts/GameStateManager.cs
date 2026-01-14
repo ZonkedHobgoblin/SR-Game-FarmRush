@@ -10,6 +10,7 @@ public class GameStateManager : MonoBehaviour
     private int currentScore;
     private int highScore;
     private bool isGameover;
+    private bool isPaused;
 
     
     // Health funciton calls
@@ -35,6 +36,15 @@ public class GameStateManager : MonoBehaviour
         return currentScore;
     }
 
+    public bool GetIsPaused()
+    {
+        return isPaused;
+    }
+
+    public void SetIsPaused(bool paused)
+    {
+        isPaused = paused;
+    }
 
     // Gameover function calls
     public bool GetIsGameover()

@@ -53,6 +53,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""16ecba7a-ec52-4a71-9b2e-76ac16a42678"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -110,6 +119,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""SpawnDefense"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32e8df44-a87c-41bc-9360-4f5567593b27"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6aba53bc-81b8-446c-a91c-0ff0426dbc37"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -133,6 +164,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_DefaultMap_Fire = m_DefaultMap.FindAction("Fire", throwIfNotFound: true);
         m_DefaultMap_Horizontal = m_DefaultMap.FindAction("Horizontal", throwIfNotFound: true);
         m_DefaultMap_SpawnDefense = m_DefaultMap.FindAction("SpawnDefense", throwIfNotFound: true);
+        m_DefaultMap_Pause = m_DefaultMap.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -197,6 +229,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultMap_Fire;
     private readonly InputAction m_DefaultMap_Horizontal;
     private readonly InputAction m_DefaultMap_SpawnDefense;
+    private readonly InputAction m_DefaultMap_Pause;
     public struct DefaultMapActions
     {
         private @PlayerControls m_Wrapper;
@@ -204,6 +237,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_DefaultMap_Fire;
         public InputAction @Horizontal => m_Wrapper.m_DefaultMap_Horizontal;
         public InputAction @SpawnDefense => m_Wrapper.m_DefaultMap_SpawnDefense;
+        public InputAction @Pause => m_Wrapper.m_DefaultMap_Pause;
         public InputActionMap Get() { return m_Wrapper.m_DefaultMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -222,6 +256,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SpawnDefense.started += instance.OnSpawnDefense;
             @SpawnDefense.performed += instance.OnSpawnDefense;
             @SpawnDefense.canceled += instance.OnSpawnDefense;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IDefaultMapActions instance)
@@ -235,6 +272,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SpawnDefense.started -= instance.OnSpawnDefense;
             @SpawnDefense.performed -= instance.OnSpawnDefense;
             @SpawnDefense.canceled -= instance.OnSpawnDefense;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IDefaultMapActions instance)
@@ -266,5 +306,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnHorizontal(InputAction.CallbackContext context);
         void OnSpawnDefense(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

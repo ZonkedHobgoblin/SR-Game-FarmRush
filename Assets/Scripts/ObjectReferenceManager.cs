@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ObjectReferenceManager : MonoBehaviour
 {
-    // Gets all objects and allows other scripts to call this script and retrieve them, stopping the constant finding of objects on every single script
+    // Gets all objects and allows other scripts to call this script and retrieve them, stopping the constant finding of objects on every single script and (hopefully) improving performance
 
     #region Variables
     #region Scripts
@@ -27,7 +27,11 @@ public class ObjectReferenceManager : MonoBehaviour
     public Slider uiCooldownSlider;
     public Button uiRetryButton;
     public Button uiMenuButton;
+    public Button uiResumeButton;
+    public Button uiQuitButton;
+    public Button uiPauseMenuButton;
     public GameObject uiGameoverObjectsParent;
+    public GameObject uiPauseMenuObjectsParent;
     #endregion
     #endregion
     private void Awake()
@@ -51,6 +55,10 @@ public class ObjectReferenceManager : MonoBehaviour
         uiCooldownSlider = GameObject.Find("uiCooldownSlider").GetComponent<Slider>();
         uiRetryButton = GameObject.Find("uiRetryButton").GetComponent<Button>();
         uiMenuButton = GameObject.Find("uiMenuButton").GetComponent<Button>();
+        uiResumeButton = GameObject.Find("uiResumeButton").GetComponent<Button>();
+        uiQuitButton = GameObject.Find("uiQuitButton").GetComponent<Button>();
+        uiPauseMenuButton = GameObject.Find("uiPauseMenuButton").GetComponent<Button>();
         uiGameoverObjectsParent = GameObject.Find("uiGameoverObjectsParent");
+        uiPauseMenuObjectsParent = GameObject.Find("uiPauseMenuObjectsParent");
     }
 }

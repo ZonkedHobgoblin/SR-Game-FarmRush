@@ -10,6 +10,7 @@ public class AnimalScript : MonoBehaviour
     public float[] speed;
     public GameObject[] prefabs;
 
+    private bool isAlive = true;
     private float boundsZ = 30;
     private ObjectReferenceManager objectReferenceManager;
     private float animalSpeed;
@@ -43,8 +44,12 @@ public class AnimalScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
-        Destroy(other.gameObject);
-        objectReferenceManager.gameBehaviourManager.IncrementScore(1);
+        if (isAlive)
+        {
+            isAlive = false;
+            Destroy(gameObject);
+            Destroy(other.gameObject);
+            objectReferenceManager.gameBehaviourManager.IncrementScore(1);
+        }
     }
 }

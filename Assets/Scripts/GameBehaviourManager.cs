@@ -57,6 +57,18 @@ public class GameBehaviourManager : MonoBehaviour
         SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
     }
 
+    public void TogglePauseMenu()
+    {
+        objectReferenceManager.stateManager.SetIsPaused(!objectReferenceManager.stateManager.GetIsPaused());
+        if (objectReferenceManager.stateManager.GetIsPaused())
+        {
+            objectReferenceManager.timescaleManager.PauseTimescale();
+
+        }
+
+    }
+
+
     private void UpdateHighScore()
     {
         if (objectReferenceManager.stateManager.GetScore() > objectReferenceManager.stateManager.GetHighScore())
@@ -81,5 +93,4 @@ public class GameBehaviourManager : MonoBehaviour
             objectReferenceManager.uiManager.enabled = false;
         }
     }
-
 }

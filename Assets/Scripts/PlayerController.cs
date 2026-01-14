@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     private float playerHorizontalInput = 0f;
     private float playerSpeed = 10;
     private float playerFireRate = 0.25f;
+    private float defenseCooldownTime = 25f;
 
     private void Awake()
     {
@@ -94,6 +95,16 @@ public class PlayerManager : MonoBehaviour
     public float GetPlayerFireRate()
     {
         return playerFireRate;
+    }
+
+    public void SetPlayerDefenseCooldownTime(float time)
+    {
+        defenseCooldownTime = time;
+    }
+
+    public float GetPlayerDefenseCooldownTime()
+    {
+        return defenseCooldownTime;
     }
 
 
@@ -174,12 +185,18 @@ public class PlayerManager : MonoBehaviour
     {
         if (isGhostedDefense)
         {
+            StartCoroutine(StartDefenseCooldown());
             isGhostedDefense = false;
-            isDefenseCooldown = true;
             Destroy(runtimeGhostDefensePrefab);
-            runtimeGhostDefensePrefab = null;
-            Instantiate(defensePrefab, new Vector3(transform.position.x, transform.position.y, 4f), Quaternion.identity);
+            Instantiate(defensePrefab, new Vector3(transform.position.x, transform.position.y, 6f), Quaternion.identity);
         }
+    }
+
+    private IEnumerator StartDefenseCooldown()
+    {
+        isDefenseCooldown = true;
+        yield return new WaitForSeconds(defenseCooldownTime);
+        isDefenseCooldown = false;
     }
 
     private IEnumerator StartCooldown()
@@ -200,7 +217,7 @@ public class PlayerManager : MonoBehaviour
         // Set ghost defense pos
         if (isGhostedDefense)
         {
-            runtimeGhostDefensePrefab.transform.position = new Vector3(transform.position.x, transform.position.y, 4f);
+            runtimeGhostDefensePrefab.transform.position = new Vector3(transform.position.x, transform.position.y, 6f);
         }
     }
 
