@@ -52,7 +52,5 @@ public class ObjectReferenceManager : MonoBehaviour
         uiRetryButton = GameObject.Find("uiRetryButton").GetComponent<Button>();
         uiMenuButton = GameObject.Find("uiMenuButton").GetComponent<Button>();
         uiGameoverObjectsParent = GameObject.Find("uiGameoverObjectsParent");
-
-        Debug.Log(gameBehaviourManager);
     }
 }

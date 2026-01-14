@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
-using System;
+using UnityEngine.SceneManagement;
 
 public class GameBehaviourManager : MonoBehaviour
 {
@@ -38,8 +40,19 @@ public class GameBehaviourManager : MonoBehaviour
     public void IncrementScore(int score)
     {
         objectReferenceManager.stateManager.SetScore(objectReferenceManager.stateManager.GetScore() + score);
-        OnScore?.Invoke();
         UpdateHighScore();
+        OnScore?.Invoke();
+        
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene("MainLevel.unity", LoadSceneMode.Single);
+    }
+
+    public void LoadMenuScene()
+    {
+        SceneManager.LoadScene("MenuScene.unity", LoadSceneMode.Single);
     }
 
     private void UpdateHighScore()
@@ -59,6 +72,11 @@ public class GameBehaviourManager : MonoBehaviour
             objectReferenceManager.stateManager.SetGameover(true);
             OnGameover?.Invoke();
             objectReferenceManager.timescaleManager.PauseTimescale();
+            objectReferenceManager.playerManager.enabled = false;
+            objectReferenceManager.stateManager.enabled = false;
+            objectReferenceManager.saveManager.enabled = false;
+            objectReferenceManager.animalSpawnManager.enabled = false;
+            objectReferenceManager.uiManager.enabled = false;
         }
     }
 

@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour
         {
             objectReferenceManager.gameBehaviourManager.OnDamage += OnDamage;
             objectReferenceManager.gameBehaviourManager.OnScore += OnScore;
+            objectReferenceManager.gameBehaviourManager.OnGameover += OnGameover;
         }
         else
         {
@@ -54,23 +55,29 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        // Get our ObjectReferenceManager
-        objectReferenceManager = FindFirstObjectByType<ObjectReferenceManager>();
+    // Get the ref Manager
+    objectReferenceManager = FindFirstObjectByType<ObjectReferenceManager>();
 
-        // Get and set the fill image (So we can change the colour if the cooldown is reached)
-        sliderFillImage = Resources.Load("Images/SliderFillImage") as Image;
+    // Get the slider fill Image
+    if (objectReferenceManager.uiCooldownSlider != null)
+        {
+            sliderFillImage = objectReferenceManager.uiCooldownSlider.fillRect.GetComponent<Image>();
+        }
 
-        // Button listener setup
-        //Button btn = objectReferenceManager.uiRetryButton.GetComponent<Button>();
-        //btn.onClick.AddListener(ReloadScene);
-        //Button btn2 = objectReferenceManager.uiMenuButton.GetComponent<Button>();
-        //btn2.onClick.AddListener(LoadMenuScene);
-    }
+    // Button listener setup
+    Button btn = objectReferenceManager.uiRetryButton.GetComponent<Button>();
+    btn.onClick.AddListener(objectReferenceManager.gameBehaviourManager.ReloadScene);
+    Button btn2 = objectReferenceManager.uiMenuButton.GetComponent<Button>();
+    btn2.onClick.AddListener(objectReferenceManager.gameBehaviourManager.LoadMenuScene);
+}
 
     private void Start()
     {
         // Hide gameover stuff
         objectReferenceManager.uiGameoverObjectsParent.SetActive(false);
+
+        // Update our score & high score
+        OnScore();
     }
 
     private void Update()
@@ -86,8 +93,13 @@ public class UIManager : MonoBehaviour
         }
         // Set cooldown slider value and colour
         objectReferenceManager.uiCooldownSlider.value = objectReferenceManager.playerManager.GetCooldown();
-        if (objectReferenceManager.playerManager.GetIsPlayerCooldown() && objectReferenceManager.uiCooldownSlider.colors) {
-
+        if (objectReferenceManager.playerManager.GetIsPlayerCooldown())
+        {
+            sliderFillImage.color = Color.red;
+        }
+        else
+        {
+            sliderFillImage.color = Color.yellow;
         }
     }
 
@@ -95,10 +107,10 @@ public class UIManager : MonoBehaviour
     {
         // Grab and the variables from out GameStateManager and update the UI elements
         // Set Score text
-        objectReferenceManager.uiScoreText.text = objectReferenceManager.stateManager.GetScore().ToString();
+        objectReferenceManager.uiScoreText.text = ("Score:\n" + objectReferenceManager.stateManager.GetScore().ToString());
 
         // Set high score text
-        objectReferenceManager.uiHighScoreText.text = objectReferenceManager.stateManager.GetHighScore().ToString();
+        objectReferenceManager.uiHighScoreText.text = ("High Score:\n" + objectReferenceManager.stateManager.GetHighScore().ToString());
     }
 
     private void OnDamage()
