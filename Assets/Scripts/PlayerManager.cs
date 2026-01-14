@@ -13,7 +13,9 @@ public class PlayerManager : MonoBehaviour
     private GameObject projectilePrefab;
     private GameObject defensePrefab;
     private GameObject ghostedDefensePrefab;
+    private GameObject runtimeGhostDefensePrefab;
     private bool isDefenseCooldown;
+    private bool isGhostedDefense;
     private bool isPlayerCooldown;
     private float playerCooldown;
     private float playerHorizontalInput = 0f;
@@ -159,12 +161,24 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void SpawnDefense()
+    private void GhostDefense()
     {
         if (!isDefenseCooldown)
         {
+            isGhostedDefense = true;
+            runtimeGhostDefensePrefab = Instantiate(ghostedDefensePrefab, new Vector3(transform.position.x, transform.position.y, 4f), Quaternion.identity);
+        }
+    }
+
+    private void SpawnDefense()
+    {
+        if (isGhostedDefense)
+        {
+            isGhostedDefense = false;
             isDefenseCooldown = true;
-            
+            Destroy(runtimeGhostDefensePrefab);
+            runtimeGhostDefensePrefab = null;
+            Instantiate(defensePrefab, new Vector3(transform.position.x, transform.position.y, 4f), Quaternion.identity);
         }
     }
 
@@ -182,6 +196,12 @@ public class PlayerManager : MonoBehaviour
         AddMovement(playerSpeed);
         // Clamp our location to avoid overstepping our bounds
         ClampPlayerPos(-12f, 12f);
+
+        // Set ghost defense pos
+        if (isGhostedDefense)
+        {
+            runtimeGhostDefensePrefab.transform.position = new Vector3(transform.position.x, transform.position.y, 4f);
+        }
     }
 
     
