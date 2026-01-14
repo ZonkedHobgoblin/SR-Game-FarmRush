@@ -44,6 +44,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpawnDefense"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1f27941-f9ee-4d55-8881-5818cdd04973"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -90,6 +99,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96d22ca8-44c7-40ac-99f6-6015d92ba96e"",
+                    ""path"": ""<Keyboard>/#(W)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpawnDefense"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -112,6 +132,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_DefaultMap = asset.FindActionMap("DefaultMap", throwIfNotFound: true);
         m_DefaultMap_Fire = m_DefaultMap.FindAction("Fire", throwIfNotFound: true);
         m_DefaultMap_Horizontal = m_DefaultMap.FindAction("Horizontal", throwIfNotFound: true);
+        m_DefaultMap_SpawnDefense = m_DefaultMap.FindAction("SpawnDefense", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -175,12 +196,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IDefaultMapActions> m_DefaultMapActionsCallbackInterfaces = new List<IDefaultMapActions>();
     private readonly InputAction m_DefaultMap_Fire;
     private readonly InputAction m_DefaultMap_Horizontal;
+    private readonly InputAction m_DefaultMap_SpawnDefense;
     public struct DefaultMapActions
     {
         private @PlayerControls m_Wrapper;
         public DefaultMapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Fire => m_Wrapper.m_DefaultMap_Fire;
         public InputAction @Horizontal => m_Wrapper.m_DefaultMap_Horizontal;
+        public InputAction @SpawnDefense => m_Wrapper.m_DefaultMap_SpawnDefense;
         public InputActionMap Get() { return m_Wrapper.m_DefaultMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -196,6 +219,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Horizontal.started += instance.OnHorizontal;
             @Horizontal.performed += instance.OnHorizontal;
             @Horizontal.canceled += instance.OnHorizontal;
+            @SpawnDefense.started += instance.OnSpawnDefense;
+            @SpawnDefense.performed += instance.OnSpawnDefense;
+            @SpawnDefense.canceled += instance.OnSpawnDefense;
         }
 
         private void UnregisterCallbacks(IDefaultMapActions instance)
@@ -206,6 +232,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Horizontal.started -= instance.OnHorizontal;
             @Horizontal.performed -= instance.OnHorizontal;
             @Horizontal.canceled -= instance.OnHorizontal;
+            @SpawnDefense.started -= instance.OnSpawnDefense;
+            @SpawnDefense.performed -= instance.OnSpawnDefense;
+            @SpawnDefense.canceled -= instance.OnSpawnDefense;
         }
 
         public void RemoveCallbacks(IDefaultMapActions instance)
@@ -236,5 +265,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnFire(InputAction.CallbackContext context);
         void OnHorizontal(InputAction.CallbackContext context);
+        void OnSpawnDefense(InputAction.CallbackContext context);
     }
 }

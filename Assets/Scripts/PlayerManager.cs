@@ -29,6 +29,8 @@ public class PlayerManager : MonoBehaviour
 
         // Load our control map
         controls = new PlayerControls();
+        controls.DefaultMap.SpawnDefense.performed += context => GhostDefense();
+        controls.DefaultMap.SpawnDefense.canceled += context => SpawnDefense();
         controls.DefaultMap.Fire.performed += context => StartFiring();
         controls.DefaultMap.Fire.canceled += context => StopFiring();
         controls.DefaultMap.Horizontal.performed += context => SetInput(context.ReadValue<float>());
@@ -133,7 +135,7 @@ public class PlayerManager : MonoBehaviour
         if (!IsInvoking("LowerCooldown"))
         {
             // A small delay (1f) before cooling starts
-            InvokeRepeating("LowerCooldown", 0.1f, 0.2f); 
+            InvokeRepeating("LowerCooldown", 0.1f, 0.2f);
         }
     }
     private void FireProjectile()
@@ -153,16 +155,26 @@ public class PlayerManager : MonoBehaviour
     {
         if (!isPlayerCooldown)
         {
-        SetCooldown(GetCooldown() - 0.1f);
+            SetCooldown(GetCooldown() - 0.1f);
+        }
+    }
+
+    private void SpawnDefense()
+    {
+        if (!isDefenseCooldown)
+        {
+            isDefenseCooldown = true;
+            
         }
     }
 
     private IEnumerator StartCooldown()
     {
-            isPlayerCooldown = true;
-            yield return new WaitForSeconds(3);
-            isPlayerCooldown = false;
+        isPlayerCooldown = true;
+        yield return new WaitForSeconds(3);
+        isPlayerCooldown = false;
     }
+
 
     private void Update()
     {

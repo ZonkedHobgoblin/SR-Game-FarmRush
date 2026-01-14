@@ -47,12 +47,14 @@ public class GameBehaviourManager : MonoBehaviour
 
     public void ReloadScene()
     {
-        SceneManager.LoadScene("MainLevel.unity", LoadSceneMode.Single);
+        objectReferenceManager.timescaleManager.UnpauseTimescale();
+        SceneManager.LoadScene("MainLevel", LoadSceneMode.Single);
     }
 
     public void LoadMenuScene()
     {
-        SceneManager.LoadScene("MenuScene.unity", LoadSceneMode.Single);
+        objectReferenceManager.timescaleManager.UnpauseTimescale();
+        SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
     }
 
     private void UpdateHighScore()
