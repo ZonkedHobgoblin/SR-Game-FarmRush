@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class PlayerManager : MonoBehaviour
     private bool isPlayerCooldown;
     private float playerCooldown;
     private float playerHorizontalInput = 0f;
-    private float playerSpeed;
-    private float playerFireRate = 0.5f;
+    private float playerSpeed = 10;
+    private float playerFireRate = 0.25f;
 
     private void Awake()
     {
@@ -31,7 +32,7 @@ public class PlayerManager : MonoBehaviour
         controls.DefaultMap.Fire.performed += context => StartFiring();
         controls.DefaultMap.Fire.canceled += context => StopFiring();
         controls.DefaultMap.Horizontal.performed += context => SetInput(context.ReadValue<float>());
-        controls.DefaultMap.Horizontal.canceled += context => SetInput(context.ReadValue<float>());
+        controls.DefaultMap.Horizontal.canceled += context => SetInput(0);
     }
 
     // Enable/Disable our controls when used/not used
@@ -119,12 +120,21 @@ public class PlayerManager : MonoBehaviour
     {
         // When StartFiring is triggered, our FireProjectile method should constantly repeat every second value given in playerFireRate
         InvokeRepeating("FireProjectile", 0, playerFireRate);
+
+        // Stop the cooldown so we don't cooldown while shooting
+        CancelInvoke("LowerCooldown");
     }
 
     private void StopFiring()
     {
         // When StopFiring is triggered, it'll stop our invoke repeating. Should be toggeled on key raise/input canceled
         CancelInvoke("FireProjectile");
+
+        if (!IsInvoking("LowerCooldown"))
+        {
+            // A small delay (1f) before cooling starts
+            InvokeRepeating("LowerCooldown", 0.1f, 0.2f); 
+        }
     }
     private void FireProjectile()
     {
@@ -150,7 +160,7 @@ public class PlayerManager : MonoBehaviour
     private IEnumerator StartCooldown()
     {
             isPlayerCooldown = true;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(3);
             isPlayerCooldown = false;
     }
 
@@ -162,106 +172,5 @@ public class PlayerManager : MonoBehaviour
         ClampPlayerPos(-12f, 12f);
     }
 
-
-
-
-
-
-
-
-
-    /// <summary>
-    /// Old script below this point
-    /// </summary>
-    private float animvalue;
-
-    // Update is called once per frame
-
-    void Update()
-    {
-        
-        //projectile stuff VVVVVVVVVVVV
-        if (Input.GetKey(KeyCode.Space) && !isShooting && !isCooldown)
-        {
-            //call the shoot thing
-            StartCoroutine(FireProjectile());
-        }
-        else if (!isShooting && !isCooldown && !isCoolingdown)
-        {
-            StartCoroutine(LowerCooldown());
-        }
-        if ((cooldown == 1) && !isCooldown)
-        {
-            StartCoroutine(Cooldown());
-        }
-
-        //spawn defense
-        if (Input.GetKey(KeyCode.E) && !defenseCooldown)
-        {
-            if (!ghostDefense)
-            {
-                ghostDefense = Instantiate(ghostDefensePrefab, new Vector3(transform.position.x, transform.position.y, (transform.position.z + 8)), ghostDefensePrefab.transform.rotation);
-            }
-            else
-            {
-                ghostDefense.transform.position = new Vector3(transform.position.x, transform.position.y, (transform.position.z + 8));
-            }
-
-        }
-        else if (ghostDefense != null)
-        {
-            Object.Destroy(ghostDefense);
-            Instantiate(defense, new Vector3(transform.position.x, transform.position.y, (transform.position.z + 8)), defense.transform.rotation);
-            StartCoroutine(DefenseCooldown());
-        }
-
-
-        //anims
-        if (horizontalInput < 0)
-        {
-            animvalue = (horizontalInput * -1f);
-        }
-        else
-        {
-            animvalue = horizontalInput;
-        }
-        //clamp cooldown
-        cooldown = (Mathf.Clamp(cooldown, 0, 1));
-        GetComponent<Animator>().SetFloat("Speed_f", animvalue);
-    }
-    //cooldown between shots
-    //IEnumerator FireProjectile()
-    {
-        isShooting = true;
-        cooldown = (cooldown + 0.1f);
-        Instantiate(projectile, transform.position, ProjectileScript.transform.rotation);
-
-        yield return new WaitForSeconds(0.2f);
-        isShooting = false;
-    }
-    IEnumerator LowerCooldown()
-    {
-        isCoolingdown = true;
-        cooldown = (cooldown - 0.06f);
-        yield return new WaitForSeconds(0.05f);
-        isCoolingdown = false;
-    }
-    IEnumerator Cooldown()
-    {
-        isCooldown = true;
-        yield return new WaitForSeconds(2.0f);
-        cooldown = 0.9f;
-        isCooldown = false;
-    }
-    IEnumerator DefenseCooldown()
-    {
-        defenseCooldown = true;
-        yield return new WaitForSeconds(30.0f);
-        defenseCooldown = false;
-    }
-    void SpawnDefense()
-    {
-        defenseCooldown = true;
-        Instantiate(defense, new Vector3(transform.position.x, transform.position.y, (transform.position.z + 8)), defense.transform.rotation);
-}
+    
 }

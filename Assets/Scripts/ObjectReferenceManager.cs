@@ -32,7 +32,7 @@ public class ObjectReferenceManager : MonoBehaviour
     #endregion
     private void Awake()
     {
-        // Get Script objects
+    // Get Script objects
         animalSpawnManager = GetComponent<AnimalSpawnManager>();
         saveManager = GetComponent<SaveManager>();
         stateManager = GetComponent<GameStateManager>();
@@ -52,5 +52,7 @@ public class ObjectReferenceManager : MonoBehaviour
         uiRetryButton = GameObject.Find("uiRetryButton").GetComponent<Button>();
         uiMenuButton = GameObject.Find("uiMenuButton").GetComponent<Button>();
         uiGameoverObjectsParent = GameObject.Find("uiGameoverObjectsParent");
+
+        Debug.Log(gameBehaviourManager);
     }
 }

@@ -10,8 +10,15 @@ public class SaveManager : MonoBehaviour
         public int Highscore;
     }
 
-    // File path for save .json
-    private string filePath = Application.persistentDataPath + "/playerData.json";
+    private string filePath;
+
+    private void Awake()
+    {
+        // File path for save .json
+        filePath = Application.persistentDataPath + "/playerData.json";
+    }
+
+
 
     // Save function
     public void SaveData(int score)

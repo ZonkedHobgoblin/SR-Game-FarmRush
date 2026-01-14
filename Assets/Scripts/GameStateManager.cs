@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class GameStateManager : MonoBehaviour
 {
-    private int playerHealth;
+    private int playerHealth = 10;
     private int currentScore;
     private int highScore;
     private bool isGameover;
