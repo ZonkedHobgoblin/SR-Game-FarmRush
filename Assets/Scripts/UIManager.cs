@@ -78,6 +78,9 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        // Hide the cursor
+        Cursor.visible = false;
+
         // Hide gameover and pause menu stuff
         objectReferenceManager.uiGameoverObjectsParent.SetActive(false);
         objectReferenceManager.uiPauseMenuObjectsParent.SetActive(false);
@@ -137,9 +140,11 @@ public class UIManager : MonoBehaviour
         if (objectReferenceManager.stateManager.GetIsPaused())
         {
             objectReferenceManager.uiPauseMenuObjectsParent.SetActive(true);
+            Cursor.visible = true;
         }
         else
         {
+            Cursor.visible = false;
             objectReferenceManager.uiPauseMenuObjectsParent.SetActive(false);
         }
     }
