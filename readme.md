@@ -17,4 +17,4 @@ Audio | [Numerous UI sounds - Pixabay](https://pixabay.com/sound-effects/)
 
 Audio | ["Woosh" sound - Upbeat](https://uppbeat.io/sfx)
 
-3D Asset | [Low-Poly barn - Sparkling Milk](https://sketchfab.com/3d-models/low-poly-barn-b26e02d082124f729872940e693b15ba)
+3D Asset | [Low-Poly barn - Sparkling_Milk](https://sketchfab.com/3d-models/low-poly-barn-b26e02d082124f729872940e693b15ba)
