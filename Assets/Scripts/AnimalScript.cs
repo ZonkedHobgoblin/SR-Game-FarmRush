@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
 public class AnimalScript : MonoBehaviour
 {
@@ -44,7 +43,7 @@ public class AnimalScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (isAlive)
+        if (isAlive && !other.CompareTag("Animal"))
         {
             isAlive = false;
             Destroy(gameObject);
