@@ -61,15 +61,19 @@ public class UIManager : MonoBehaviour
     // Button listener setup
     Button retryButton = objectReferenceManager.uiRetryButton.GetComponent<Button>();
     retryButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.ReloadScene);
+    retryButton.onClick.AddListener(objectReferenceManager.audioManager.PlayUIClick);
     Button menuButton = objectReferenceManager.uiMenuButton.GetComponent<Button>();
     menuButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.LoadMenuScene);
+    menuButton.onClick.AddListener(objectReferenceManager.audioManager.PlayUIClick);
     Button resumeButton = objectReferenceManager.uiResumeButton.GetComponent<Button>();
     resumeButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.TogglePauseMenu);
+    resumeButton.onClick.AddListener(objectReferenceManager.audioManager.PlayUIClick);
     Button pauseMenuButton = objectReferenceManager.uiPauseMenuButton.GetComponent<Button>();
     pauseMenuButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.LoadMenuScene);
+    pauseMenuButton.onClick.AddListener(objectReferenceManager.audioManager.PlayUIClick);
     Button quitButton = objectReferenceManager.uiQuitButton.GetComponent<Button>();
     quitButton.onClick.AddListener(objectReferenceManager.gameBehaviourManager.QuitGame);
-
+    quitButton.onClick.AddListener(objectReferenceManager.audioManager.PlayUIClick);
     }
 
     private void Start()

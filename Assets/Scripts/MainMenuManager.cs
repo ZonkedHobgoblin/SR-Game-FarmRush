@@ -11,6 +11,7 @@ public class MainMenuManager : MonoBehaviour
     private Button uiQuitButton;
     private TextMeshProUGUI uiHighScoreText;
     private SaveManager saveManager;
+    private AudioManager audioManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -20,11 +21,14 @@ public class MainMenuManager : MonoBehaviour
         uiQuitButton = GameObject.Find("uiQuitButton").GetComponent<Button>();
         uiHighScoreText = GameObject.Find("uiHighScoreText").GetComponent<TextMeshProUGUI>();
         saveManager = GetComponent<SaveManager>();
+        audioManager = GetComponent<AudioManager>();
 
         // Button listener setup
         Button playButton = uiPlayButton.GetComponent<Button>();
+        playButton.onClick.AddListener(audioManager.PlayUIClick);
         playButton.onClick.AddListener(LoadMainLevel);
         Button quitButton = uiQuitButton.GetComponent<Button>();
+        quitButton.onClick.AddListener(audioManager.PlayUIClick);
         quitButton.onClick.AddListener(QuitGame);
 
         // Set our high score

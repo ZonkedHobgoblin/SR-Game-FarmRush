@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     private AudioClip gameoverAudio;
     private AudioClip damageAudio;
     private AudioClip uiClickAudio;
+    private AudioClip loadAudio;
     private AudioSource musicSource;
     private AudioSource sfxSource;
 
@@ -28,10 +29,12 @@ public class AudioManager : MonoBehaviour
         damageAudio = Resources.Load<AudioClip>("Audio/Damage");
         gameoverAudio = Resources.Load<AudioClip>("Audio/Gameover");
         uiClickAudio = Resources.Load<AudioClip>("Audio/UIClick");
+        loadAudio = Resources.Load<AudioClip>("Audio/Load");
     }
 
     private void Start()
     {
+        sfxSource.PlayOneShot(loadAudio);
         if (SceneManager.GetActiveScene().name == "MainLevel")
         {
             musicSource.clip = backgroundMusic;
@@ -58,7 +61,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayUIClick()
     {
-
+        sfxSource.PlayOneShot(uiClickAudio);
     }
 
     public void PlayDamageSound()
