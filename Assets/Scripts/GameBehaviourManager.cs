@@ -35,6 +35,7 @@ public class GameBehaviourManager : MonoBehaviour
 
     public void IncrementHealth(int health)
     {
+        objectReferenceManager.audioManager.PlayDamageSound();
         objectReferenceManager.stateManager.SetHealth(objectReferenceManager.stateManager.GetHealth() + health);
         OnDamage?.Invoke();
         CheckGameover();
@@ -65,6 +66,7 @@ public class GameBehaviourManager : MonoBehaviour
     {
         Debug.Log("Pause toggled");
         objectReferenceManager.stateManager.SetIsPaused(!objectReferenceManager.stateManager.GetIsPaused());
+        objectReferenceManager.audioManager.ToggleMusic();
         if (objectReferenceManager.stateManager.GetIsPaused())
         {
             objectReferenceManager.playerController.SetCanPlayerFire(false);
@@ -103,6 +105,7 @@ public class GameBehaviourManager : MonoBehaviour
         // Gameover management
         if ((objectReferenceManager.stateManager.GetHealth() <= 0) && (!objectReferenceManager.stateManager.GetIsGameover()))
         {
+            objectReferenceManager.audioManager.PlayGameoverSound();
             objectReferenceManager.stateManager.SetGameover(true);
             OnGameover?.Invoke();
             objectReferenceManager.timescaleManager.PauseTimescale();

@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isPlayerCooldown)
         {
+            objectReferenceManager.audioManager.PlayFireSound();
             Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             SetCooldown(GetCooldown() + 0.1f);
             if (playerCooldown >= 1)

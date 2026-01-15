@@ -17,6 +17,7 @@ public class ObjectReferenceManager : MonoBehaviour
     public GameStateManager stateManager;
     public GameBehaviourManager gameBehaviourManager;
     public TimescaleManager timescaleManager;
+    public AudioManager audioManager;
     #endregion
     #region UI Elements
     public TextMeshProUGUI uiScoreText;
@@ -42,6 +43,7 @@ public class ObjectReferenceManager : MonoBehaviour
         stateManager = GetComponent<GameStateManager>();
         gameBehaviourManager = GetComponent<GameBehaviourManager>();
         timescaleManager = GetComponent<TimescaleManager>();
+        audioManager = GetComponent<AudioManager>();
         playerController = FindFirstObjectByType<PlayerController>();
         uiManager = FindFirstObjectByType<UIManager>();
 

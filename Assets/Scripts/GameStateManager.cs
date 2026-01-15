@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class GameStateManager : MonoBehaviour
 {
-    private int playerHealth = 10;
+    private int playerHealth = 1000;
     private int currentScore;
     private int highScore;
     private bool isGameover;
@@ -16,7 +16,7 @@ public class GameStateManager : MonoBehaviour
     // Health funciton calls
     public void SetHealth(int health)
     {
-        Mathf.Clamp(health, 0, 10);
+        Mathf.Clamp(health, 0, 1000);
         playerHealth = health;
         Debug.Log($"Health: {health}");
     }

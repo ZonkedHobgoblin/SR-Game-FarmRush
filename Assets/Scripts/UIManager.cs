@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
         // Check to see if we have the manager
         if (objectReferenceManager == null)
         {
-            // Try finding it again just in case Awake failed or hasn't run
+            // Try againcase awake hasn't run
             objectReferenceManager = FindFirstObjectByType<ObjectReferenceManager>();
         }
 
@@ -56,10 +56,7 @@ public class UIManager : MonoBehaviour
     objectReferenceManager = FindFirstObjectByType<ObjectReferenceManager>();
 
     // Get the slider fill Image
-    if (objectReferenceManager.uiCooldownSlider != null)
-        {
-            sliderFillImage = objectReferenceManager.uiCooldownSlider.fillRect.GetComponent<Image>();
-        }
+    sliderFillImage = objectReferenceManager.uiCooldownSlider.fillRect.GetComponent<Image>();
 
     // Button listener setup
     Button retryButton = objectReferenceManager.uiRetryButton.GetComponent<Button>();
