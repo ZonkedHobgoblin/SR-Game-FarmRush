@@ -63,6 +63,8 @@
     <Compile Include="Assets\Scripts\ObjectReferenceManager.cs" />
     <Compile Include="Assets\Scripts\GameStateManager.cs" />
     <Compile Include="Assets\Scripts\ProjectileScript.cs" />
+    <Compile Include="Assets\Scripts\MainMenuManager.cs" />
+    <Compile Include="Assets\Scripts\CameraResizer.cs" />
     <Compile Include="Assets\Scripts\GameBehaviourManager.cs" />
     <Compile Include="Assets\Scripts\TimescaleManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
