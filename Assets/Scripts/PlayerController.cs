@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Variables
     private ObjectReferenceManager objectReferenceManager;
     private PlayerControls controls;
     private GameObject projectilePrefab;
@@ -23,7 +24,9 @@ public class PlayerController : MonoBehaviour
     private float playerSpeed = 10;
     private float playerFireRate = 0.25f;
     private float defenseCooldownTime = 25f;
+    #endregion
 
+    #region On Awake
     private void Awake()
     {
         // Load our assets
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
         controls.DefaultMap.Horizontal.canceled += context => SetInput(0);
         controls.DefaultMap.Pause.performed += context => objectReferenceManager.gameBehaviourManager.TogglePauseMenu();
     }
+    #endregion
 
     // Enable/Disable our controls when used/not used
     private void OnEnable()
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour
         controls.Disable();
     }
 
+    #region Public Variable Call Methods
     //////////////////////////////////////////////////////////
     // Variable call methods
     public bool GetDefenseCooldown()
@@ -129,6 +134,7 @@ public class PlayerController : MonoBehaviour
         playerHorizontalInput = input;
     }
     //////////////////////////////////////////////////////////
+    #endregion
 
     private void Start()
     {

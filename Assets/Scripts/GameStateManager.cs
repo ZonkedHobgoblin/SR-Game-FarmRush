@@ -18,7 +18,6 @@ public class GameStateManager : MonoBehaviour
     {
         Mathf.Clamp(health, 0, 10);
         playerHealth = health;
-        Debug.Log($"Health: {health}");
     }
     public int GetHealth()
     {

@@ -63,7 +63,6 @@ public class GameBehaviourManager : MonoBehaviour
 
     public void TogglePauseMenu()
     {
-        Debug.Log("Pause toggled");
         objectReferenceManager.stateManager.SetIsPaused(!objectReferenceManager.stateManager.GetIsPaused());
         objectReferenceManager.audioManager.ToggleMusic();
         if (objectReferenceManager.stateManager.GetIsPaused())
