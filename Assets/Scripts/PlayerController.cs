@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
         if (!IsInvoking("LowerCooldown"))
         {
             // A small delay (1f) before cooling starts
-            InvokeRepeating("LowerCooldown", 0.1f, 0.2f);
+            InvokeRepeating("LowerCooldown", 0.1f, 0.125f);
         }
     }
     private void FireProjectile()

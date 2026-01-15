@@ -131,6 +131,7 @@ public class UIManager : MonoBehaviour
 
     private void OnGameover()
     {
+        Cursor.visible = true;
         objectReferenceManager.uiGameoverObjectsParent.SetActive(true);
         objectReferenceManager.uiGameoverText.text = $"GAME OVER\n\nScore: {objectReferenceManager.stateManager.GetScore().ToString()}\nHigh Score: {objectReferenceManager.stateManager.GetHighScore().ToString()}";
     }
